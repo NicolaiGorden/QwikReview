@@ -7,8 +7,9 @@ function Gate() {
     const [signUp, setSignup] = useState(false)
     const [user, setUser] = useContext(LoginContext)
     const navigate = useNavigate();
-    const [errors, setErrors] = useState([])
-    const [signUpErrors, setSignUpErrors] = useState([])
+    const [usernameError, setUsernameError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [passwordConfirmationError, setPasswordConfirmationError] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
@@ -18,8 +19,9 @@ function Gate() {
     function signUpToggle(e) {
         e.preventDefault()
         setSignup(!signUp)
-        setErrors([])
-        setSignUpErrors([])
+        setUsernameError('')
+        setPasswordError('')
+        setPasswordConfirmationError('')
         setUsername('')
         setPassword('')
         setPasswordConfirmation('')
@@ -36,6 +38,10 @@ function Gate() {
 
     function onLoginSubmit(e) {
         e.preventDefault()
+        login()
+    }
+
+    function login() {
         fetch("/login", {
             method: "POST",
             headers: {
@@ -51,14 +57,16 @@ function Gate() {
                 res.json().then((user) => {
                     setUser(user)
                     navigate('/')
-                    setErrors([])
+                    setUsernameError('')
+                    setPasswordError('')
+                    setPasswordConfirmationError('')
                     setUsername('')
                     setPassword('')
                     setPasswordConfirmation('')
                 })
             } else {
                 res.json().then((err) => {
-                    setErrors([err.error.login])
+                    setPasswordError([err.error.login])
                 })
             }
         })
@@ -66,6 +74,9 @@ function Gate() {
 
     function onSignupSubmit(e) {
         e.preventDefault()
+        setUsernameError('')
+        setPasswordError('')
+        setPasswordConfirmationError('')
         const userCreds = {
             username,
             password,
@@ -79,50 +90,75 @@ function Gate() {
         .then(res => {
             if(res.ok){
                 res.json().then(
-                    console.log(res)
+                    login()
                     //if res is user, call onlogin and set user
                 )
             } else {
-                res.json().then((err) => console.log(err))
+                res.json().then((err) => {
+                    console.log(err.errors)
+                    err.errors.map(e => {
+                        switch (e) {
+                            case "Username can't be blank":
+                                setUsernameError('Required')
+                                break;
+                            case 'Username is too short (minimum is 5 characters)':
+                                setUsernameError('Too short (min: 5 characters)')
+                                break;
+                            case 'Username already belongs to another user!':
+                                setUsernameError('Already exists')
+                            case "Password can't be blank":
+                                setPasswordError('Required')
+                                break;
+                            case 'Password must contain an uppercase character!':
+                                setPasswordError('Must contain uppercase')
+                                break;   
+                            case "Password confirmation doesn't match Password":
+                                setPasswordConfirmationError("Doesn't match password")
+                                break;
+                        }
+                    })
+                })
             }
         })
     }
 
     return (
-        <div className="Signup-Form-Box" onSubmit={onLoginSubmit}>
+        <div className="Signup-Form-Box" onSubmit={signUp ? onSignupSubmit : onLoginSubmit}>
             <form className="Signup-Form">
                 <h1 className="Gate-Title">QwikReview</h1>
                 <hr className='Gate-Divider'/>
                 <label className='Signup-Label'>Username</label>
                 <input
-                    className={errors[0] || signUpErrors[0] ? 'Input-Error': 'Gate-Input'}
+                    className={usernameError ? 'Input-Error': 'Gate-Input'}
                     placeholder="Your Username"
                     type="Text"
                     id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <div className="Error-Msg"></div>
+                <div className="Error-Msg">{usernameError ? usernameError : null}</div>
                 <label className='Signup-Label'>Password</label>
                 <input
-                    className={errors[0] || signUpErrors[0] ? 'Input-Error': 'Gate-Input'}
+                    className={passwordError ? 'Input-Error': 'Gate-Input'}
                     placeholder="Choose Password"
                     type="Password"
-                    id="username"
+                    id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="Error-Msg">{!signUp ? errors.join(', ') : null}</div>
+                <div className="Error-Msg">{passwordError ? passwordError : null}</div>
                 { signUp ?
                 <>
                     <label className='Signup-Label'>Confirm Password</label>
                     <input
-                        className={errors[0] || signUpErrors[0] ? 'Input-Error': 'Gate-Input'}
+                        className={passwordConfirmationError ? 'Input-Error': 'Gate-Input'}
                         placeholder=""
                         type="Password"
-                        id="username"
+                        id="passwordconfirmation"
+                        value={passwordConfirmation}
+                        onChange={(e) => setPasswordConfirmation(e.target.value)}
                     />
-                    <div className="Error-Msg">{signUp ? errors.join(', ') : null}</div>
+                    <div className="Error-Msg">{passwordConfirmationError ? passwordConfirmationError : null}</div>
                 </>
                 :
                 null
