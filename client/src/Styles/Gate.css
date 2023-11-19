@@ -25,7 +25,7 @@
     display:flex;
     justify-content: center;
     align-items: center;
-
+    box-shadow:  rgb(77, 135, 210) 0px 10px, rgb(131, 170, 221) 0px 20px;
 }
 
 .Gateul {

@@ -1,0 +1,48 @@
+.game-widget {
+    width: 146px;
+    height: 190px;
+    background: rgb(29, 29, 29);
+    box-shadow: 5px 10px 20px #000;
+    cursor: pointer;
+    border-radius: 10px;
+    display: grid;
+    grid-template-rows: 190px; 
+    grid-template-columns: 146px;
+}
+
+.title-card {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    z-index: 1;
+    background: #12121200;
+    color: #12121200;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-text {
+    padding: 50px 5px 0px 5px;
+    overflow:hidden;
+    font-family: 'PT Sans', sans-serif;
+    font-size:18px
+}
+
+.library-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.library-img, .title-card {
+    grid-row: 1/1;
+    grid-column: 1/1;
+}
+
+.title-card:hover {
+    background: #121212e1;
+    color: rgb(245, 245, 245);
+}

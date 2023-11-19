@@ -1,0 +1,22 @@
+.LibraryWrapper {
+    height: 700px;
+    width: 80%;
+    min-width: 500px;
+    background-color: #121212;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: grid;
+    grid-template-columns: minmax(250px, 3fr) 250px;
+}
+
+.Library {
+
+
+}
+
+.Sidebar {
+
+    background-color: chocolate;
+}

@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import GameWidget from './GameWidget';
+import styles from '../Styles/Library.css'
 
 function Library() {
     return (
-        <h1>Library</h1>
+        <div className="LibraryWrapper">
+            <div className="Library">
+                <GameWidget/>
+            </div>
+            <div className="Sidebar">
+                
+            </div>
+        </div>
     )
 }
 

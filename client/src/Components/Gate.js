@@ -91,11 +91,9 @@ function Gate() {
             if(res.ok){
                 res.json().then(
                     login()
-                    //if res is user, call onlogin and set user
                 )
             } else {
                 res.json().then((err) => {
-                    console.log(err.errors)
                     err.errors.map(e => {
                         switch (e) {
                             case "Username can't be blank":
