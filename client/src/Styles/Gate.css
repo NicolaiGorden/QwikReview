@@ -1,0 +1,121 @@
+.Gate-Title {
+    font-family: 'Poppins', sans-serif;
+    color:rgb(245, 245, 245);
+    font-size: 30px;
+    margin: 5px 0px;
+}
+
+.Signup-Form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    align-items: center;
+    color: rgb(245, 245, 245);
+    font-family: 'PT Sans', sans-serif;
+}
+
+.Signup-Form-Box {
+    width: 500px;
+    height: 600px;
+    background-color: #121212;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.Gateul {
+    list-style-type: none;
+}
+
+.Signup-Label {
+    align-self: flex-start;
+    margin-bottom: -5px;
+    font-size: 16px;
+}
+
+.Gate-Input {
+    background-color: transparent;
+    color: rgb(245, 245, 245);
+    font-family: 'PT Sans', sans-serif;
+    font-size: 18px;
+    width: 100%;
+    height: 50px;
+    padding: 12px 20px;
+    margin: 8px 0px;
+    box-sizing: border-box;
+    border: 2px solid rgb(193, 193, 193);
+    border-radius: 10px;
+}
+
+.Input-Error {
+    background-color: transparent;
+    color: rgb(245, 245, 245);
+    font-family: 'PT Sans', sans-serif;
+    font-size: 18px;
+    width: 100%;
+    height: 50px;
+    padding: 12px 20px;
+    margin: 8px 0px;
+    box-sizing: border-box;
+    border: 2px solid rgb(188, 54, 54);
+    border-radius: 10px;
+}
+
+.Gate-Input:focus {
+    border: 2px solid rgb(77, 135, 210);
+    outline:none;
+}
+
+.Error-Msg {
+    align-self: flex-end;
+    margin-top: -8px;
+    height: 21px;
+    font-size: 14px;
+    color: rgb(188, 54, 54);
+}
+
+.Entry-Button {
+    width: 100%;
+    height: 50px;
+    background-color: rgb(77, 135, 210);
+    border: 2px solid rgb(77, 135, 210);
+    border-radius: 10px;
+    color: rgb(245, 245, 245);
+    font-family: 'PT Sans', sans-serif;
+    font-size: 18px;
+    transition: .2s;
+    margin: 20px 0px;
+}
+
+.Entry-Button:hover {
+    background-color: rgb(131, 170, 221);
+    border: 2px solid rgb(131, 170, 221);
+}
+
+.Mode-Swap {
+    margin: 20px 0px;
+    font-size: 16px;
+}
+
+.Swap-Button {
+    font-family: 'PT Sans', sans-serif;
+    color: rgb(245, 245, 245);
+    border: 1px solid rgb(245, 245, 245);
+    background-color: transparent;
+    outline-width: 2px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 4px 6px;
+    margin-left: 3px;
+}
+
+.Gate-Divider {
+    border-top: 1px solid rgb(245, 245, 245);
+    width: 90%;
+    margin: 10px 0px 20px 0px;
+}

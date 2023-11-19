@@ -11,24 +11,22 @@
     font-size: 30px;
 }
 
-li, button {
+.Navli {
     font-family: 'PT Sans', sans-serif;
     font-size: 20px;
+    font-weight: bold;
     color:rgb(245, 245, 245);
 }
 
-ul {
+.Navul {
     list-style-type: none;
     display: flex;
-    min-width: 210px;
+    min-width: 230px;
     justify-content: space-evenly;
 }
 
 header {
     background-color: #121212;
-    outline-color:rgb(193, 193, 193);
-    outline-width: 2px;
-    outline-style: solid;
 }
 
 nav {
@@ -38,29 +36,42 @@ nav {
     padding: 20px 20%
 }
 
-button {
+.navbutton {
     border:none;
     background-color: transparent;
     outline-width: 2px;
     border-radius: 50px;
-    border: 2px solid rgb(131, 170, 221);
     width: 95px;
     height: 30px;
     transition: .2s;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 20px;
+    color:rgb(245, 245, 245);
 }
 
-button:hover {
+.login {
+    border: 2px solid rgb(131, 170, 221);
+    border-radius: 50px;
+    transition: .2s;
+}
+
+.login:hover {
     border: 2px solid rgb(77, 135, 210);
-    cursor: pointer;
 }
 
 .signup {
-    background-color: rgb(131, 170, 221);
+    background-color: rgb(77, 135, 210);
+    border: 2px solid rgb(77, 135, 210);
     border-radius: 50px;
     transition: .2s;
 }
 
 .signup:hover {
-    background-color: rgb(77, 135, 210);
+    background-color: rgb(131, 170, 221);
+    border: 2px solid rgb(131, 170, 221);
     border-radius: 50px;
+}
+
+button:hover {
+    cursor: pointer;
 }
