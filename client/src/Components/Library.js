@@ -16,6 +16,7 @@ function Library() {
                             guid={e.guid}
                             name={e.name}
                             art={e.art}
+                            id={e.id}
                         />
                     )
                 })}

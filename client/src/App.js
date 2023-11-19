@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WithNav from "./Components/WithNav";
 import Gate from "./Components/Gate";
 import Library from "./Components/Library";
+import GamePage from "./Components/GamePage";
 
 export const LoginContext = createContext()
 export const GamesContext = createContext()
@@ -42,6 +43,10 @@ function App() {
                   path="/"
                   element= {<Library/>}
                 />
+                <Route 
+                  path="/game/:id"
+                  element= {<GamePage/>}
+                />
               </Route>
 
 
@@ -62,15 +67,7 @@ function App() {
 }
 
 //NEXT:
-//add basic game model, serializers, and such, just for indexing for now
-//add seed data for games
-//GIT
-
-//load all games in app
-//pass games to gamewidget components
-//GIT
-
-//add filter and sort to frontend
+//add filter and sort to frontend (maybe actually do this after adding review model so you can sort by review amount and score)
 //GIT
 
 //add page for individual games
