@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { LoginContext } from '../App';
 import styles from '../Styles/Gate.css'
 
 function Gate() {
     const [signUp, setSignup] = useState(false)
-    const [errors, setErrors] = useState(['err', 'err2'])
+    const [user, setUser] = useContext(LoginContext)
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState([])
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
@@ -13,6 +16,10 @@ function Gate() {
     function signUpToggle(e) {
         e.preventDefault()
         setSignup(!signUp)
+        setErrors([])
+        setUsername('')
+        setPassword('')
+        setPasswordConfirmation('')
     }
 
     useEffect(e => {
@@ -35,7 +42,14 @@ function Gate() {
         })
         .then((res) => {
             if(res.ok){
-                res.json().then((user) => console.log(user))
+                res.json().then((user) => {
+                    setUser(user)
+                    navigate('/')
+                    setErrors([])
+                    setUsername('')
+                    setPassword('')
+                    setPasswordConfirmation('')
+                })
             } else {
                 res.json().then((err) => {
                     setErrors([err.error.login])
