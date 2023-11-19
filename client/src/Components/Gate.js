@@ -12,6 +12,8 @@ function Gate() {
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const { mode } = useParams()
+
+    //NEXT, MAKE LOGOUT AND LOGOUT BUTTON ON NAV
     
     function signUpToggle(e) {
         e.preventDefault()
@@ -23,6 +25,9 @@ function Gate() {
     }
 
     useEffect(e => {
+        if (user) {
+            navigate('/')
+        }
         if (mode === 'signup') {
             setSignup(true)
         }
