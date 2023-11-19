@@ -8,17 +8,18 @@ function Gate() {
     const [user, setUser] = useContext(LoginContext)
     const navigate = useNavigate();
     const [errors, setErrors] = useState([])
+    const [signUpErrors, setSignUpErrors] = useState([])
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const { mode } = useParams()
 
-    //NEXT, MAKE LOGOUT AND LOGOUT BUTTON ON NAV
-    
+  
     function signUpToggle(e) {
         e.preventDefault()
         setSignup(!signUp)
         setErrors([])
+        setSignUpErrors([])
         setUsername('')
         setPassword('')
         setPasswordConfirmation('')
@@ -63,6 +64,30 @@ function Gate() {
         })
     }
 
+    function onSignupSubmit(e) {
+        e.preventDefault()
+        const userCreds = {
+            username,
+            password,
+            password_confirmation: passwordConfirmation,
+        }
+        fetch('/users', {
+            method: "POST",
+            headers: {'Content-Type':'application/json'},
+            body:JSON.stringify(userCreds)
+        })
+        .then(res => {
+            if(res.ok){
+                res.json().then(
+                    console.log(res)
+                    //if res is user, call onlogin and set user
+                )
+            } else {
+                res.json().then((err) => console.log(err))
+            }
+        })
+    }
+
     return (
         <div className="Signup-Form-Box" onSubmit={onLoginSubmit}>
             <form className="Signup-Form">
@@ -70,7 +95,7 @@ function Gate() {
                 <hr className='Gate-Divider'/>
                 <label className='Signup-Label'>Username</label>
                 <input
-                    className={errors[0] ? 'Input-Error': 'Gate-Input'}
+                    className={errors[0] || signUpErrors[0] ? 'Input-Error': 'Gate-Input'}
                     placeholder="Your Username"
                     type="Text"
                     id="username"
@@ -80,7 +105,7 @@ function Gate() {
                 <div className="Error-Msg"></div>
                 <label className='Signup-Label'>Password</label>
                 <input
-                    className={errors[0] ? 'Input-Error': 'Gate-Input'}
+                    className={errors[0] || signUpErrors[0] ? 'Input-Error': 'Gate-Input'}
                     placeholder="Choose Password"
                     type="Password"
                     id="username"
@@ -92,7 +117,7 @@ function Gate() {
                 <>
                     <label className='Signup-Label'>Confirm Password</label>
                     <input
-                        className={errors[0] ? 'Input-Error': 'Gate-Input'}
+                        className={errors[0] || signUpErrors[0] ? 'Input-Error': 'Gate-Input'}
                         placeholder=""
                         type="Password"
                         id="username"
