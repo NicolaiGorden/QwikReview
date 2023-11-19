@@ -6,6 +6,9 @@ function Gate() {
     const [signUp, setSignup] = useState(false)
     const [usernameError, setUsernameError] = useState([])
     const [passwordError, setPasswordError] = useState([])
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const { mode } = useParams()
     
     function signUpToggle(e) {
@@ -19,8 +22,31 @@ function Gate() {
         }
     }, [])
 
+    function onLoginSubmit(e) {
+        e.preventDefault()
+        fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                username,
+                password
+            }),
+        })
+        .then((res) => {
+            if(res.ok){
+                res.json().then((user) => console.log(user))
+            } else {
+                res.json().then((err) => {
+                    console.log(err)
+                })
+            }
+        })
+    }
+
     return (
-        <div className="Signup-Form-Box">
+        <div className="Signup-Form-Box" onSubmit={onLoginSubmit}>
             <form className="Signup-Form">
                 <h1 className="Gate-Title">QwikReview</h1>
                 <hr className='Gate-Divider'/>
@@ -30,6 +56,8 @@ function Gate() {
                     placeholder="Your Username"
                     type="Text"
                     id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
                 <div className="Error-Msg">{usernameError.join(', ')}</div>
                 <label className='Signup-Label'>Password</label>
@@ -38,6 +66,8 @@ function Gate() {
                     placeholder="Choose Password"
                     type="Password"
                     id="username"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <div className="Error-Msg">{passwordError.join(', ')}</div>
                 { signUp ?
@@ -54,7 +84,12 @@ function Gate() {
                 :
                 null
                 }
-                <button className="Entry-Button"> { signUp ? 'SIGN UP' : 'LOG IN' } </button>
+                <button 
+                    className="Entry-Button"
+                    type="submit"
+                > 
+                    { signUp ? 'SIGN UP' : 'LOG IN' } 
+                </button>
                 <div>
                     <ul className="Gateul">
                         <li className="Mode-Swap">
