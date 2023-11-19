@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../Styles/GameWidget.css'
 
-function GameWidget() {
+function GameWidget({guid, art, name}) {
     return (
         <div onClick={console.log('ongameclick')}class="game-widget">
                 <div class="title-card">    
-                    <div class="title-text">Minecraft</div>
+                    <div class="title-text">{name}</div>
                 </div>
-            <img class="library-img" src='https://www.giantbomb.com/a/uploads/original/8/87790/3020660-box_mc.png' alt='minecraft'/>
+            <img class="library-img" src={art} alt={name}/>
         </div>
     )
 }
