@@ -4,8 +4,7 @@ import styles from '../Styles/Gate.css'
 
 function Gate() {
     const [signUp, setSignup] = useState(false)
-    const [usernameError, setUsernameError] = useState([])
-    const [passwordError, setPasswordError] = useState([])
+    const [errors, setErrors] = useState(['err', 'err2'])
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
@@ -39,7 +38,7 @@ function Gate() {
                 res.json().then((user) => console.log(user))
             } else {
                 res.json().then((err) => {
-                    console.log(err)
+                    setErrors([err.error.login])
                 })
             }
         })
@@ -52,35 +51,35 @@ function Gate() {
                 <hr className='Gate-Divider'/>
                 <label className='Signup-Label'>Username</label>
                 <input
-                    className={usernameError[0] ? 'Input-Error': 'Gate-Input'}
+                    className={errors[0] ? 'Input-Error': 'Gate-Input'}
                     placeholder="Your Username"
                     type="Text"
                     id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <div className="Error-Msg">{usernameError.join(', ')}</div>
+                <div className="Error-Msg"></div>
                 <label className='Signup-Label'>Password</label>
                 <input
-                    className={passwordError[0] ? 'Input-Error': 'Gate-Input'}
+                    className={errors[0] ? 'Input-Error': 'Gate-Input'}
                     placeholder="Choose Password"
                     type="Password"
                     id="username"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="Error-Msg">{passwordError.join(', ')}</div>
+                <div className="Error-Msg">{!signUp ? errors.join(', ') : null}</div>
                 { signUp ?
-                <div>
+                <>
                     <label className='Signup-Label'>Confirm Password</label>
                     <input
-                        className={passwordError[0] ? 'Input-Error': 'Gate-Input'}
+                        className={errors[0] ? 'Input-Error': 'Gate-Input'}
                         placeholder=""
                         type="Password"
                         id="username"
                     />
-                    <div className="Error-Msg">{passwordError.join(', ')}</div>
-                </div>
+                    <div className="Error-Msg">{signUp ? errors.join(', ') : null}</div>
+                </>
                 :
                 null
                 }
