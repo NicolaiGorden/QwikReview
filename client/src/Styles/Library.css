@@ -12,11 +12,37 @@
 }
 
 .Library {
-
+    height: 700px;
+    padding:12px;
+    display: flex;
+    flex-wrap:wrap;
+    align-content: flex-start;
+    overflow-y: scroll;
+    justify-content: flex-start;
+    gap: 8px;
 
 }
 
-.Sidebar {
+.Library::-webkit-scrollbar {
+    width: 35px;
+}
 
+.Library::-webkit-scrollbar-track {
+    background-color: rgb(60, 60, 60);
+    margin: 10px;
+    padding-right: 10px;
+    border-radius: 50px;
+    border: 5px solid #121212;
+}
+
+.Library::-webkit-scrollbar-thumb {
+    background: rgb(77, 135, 210);
+    background-clip: content-box;
+    border-radius: 50px;
+    border: 5px solid transparent;
+}
+
+.Sidebar {
+    height: 700px;
     background-color: chocolate;
 }
