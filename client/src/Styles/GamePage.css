@@ -13,6 +13,7 @@
     height: 700px;
     padding:19px;
     display: flex;
+    align-content: flex-start;
     flex-wrap:wrap;
     overflow-y: scroll;
     gap: 8px;
@@ -73,4 +74,32 @@
     width: 100%;
     object-fit: cover;
     border-radius: 10px;
+}
+
+.Average-Score-Space {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:70px;
+    width:230px;
+    font-family: 'Poppins', sans-serif;
+    color:rgb(245, 245, 245);
+    font-size: 20px;
+    background-color: #121212;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 10px;
+}
+
+.Average-Score {
+    height: 75px;
+    width: 75px;
+    font-family: 'Poppins', sans-serif;
+    color:rgb(245, 245, 245);
+    font-size: 30px;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px
 }

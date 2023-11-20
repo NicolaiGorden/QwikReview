@@ -23,6 +23,10 @@ function GamePage() {
                 <div className="Game-Big">
                     <img className="Game-Big-Img" src={game?.art} alt={game?.name}/>
                 </div>
+                <div className='Average-Score-Space'>
+                    <div>{game?.average_score ? 'User Rating:' : 'Not yet rated!'}</div>
+                    {game?.average_score ? <div className='Average-Score'>{game?.average_score}/10</div> : null}
+                </div>
             </div>
             <div className='Reviews'>
                 {game?.reviews?.map(e => {
