@@ -41,5 +41,6 @@
 
 .Sidebar {
     height: 700px;
-    background-color: chocolate;
+    border-radius: 0px 5px 5px 0px;
+    background-color: rgb(60, 60, 60);
 }

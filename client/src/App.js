@@ -70,14 +70,8 @@ function App() {
 //add filter and sort to frontend (maybe actually do this after adding review model so you can sort by review amount and score)
 //GIT
 
-//add page for individual games
-//GIT
-
 //add basic review model, serializers, and such, again, just indexing for now
 //add seed data for reviews
-//GIT
-
-//add reviews to frontend
 //GIT
 
 export default App;
