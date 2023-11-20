@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../Styles/Review.css'
 
-function Review() {
+function Review({username, userImage, title, body, score }) {
 
     const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac mauris faucibus, malesuada nunc a, molestie ante. In dapibus lectus vehicula libero venenatis, finibus vulputate velit ultricies. Nunc ac commodo arcu, eget sagittis libero. Suspendisse pretium commodo finibus. Curabitur massa nunc."
     
     return (
         <div className='Review'>
             <div className='Title-User'>
-                <div className='Review-Title'>"Title"</div>
+                <div className='Review-Title'>{title}</div>
                 <div className='Review-Header'>
                     <div 
                         className='Review-User-Img'
@@ -20,11 +20,11 @@ function Review() {
             <div className='Content'>
                 <div className='Text-Space'>
                     <div className='Text'>
-                        {lorem}
+                        {body}
                     </div>
                 </div>
                 <div className='Score-Space'>
-                    <div className= 'Score'>8/10</div>
+                    <div className= 'Score'>{score}/10</div>
                 </div>
             </div>
         </div>

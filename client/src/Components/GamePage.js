@@ -14,7 +14,7 @@ function GamePage() {
 
     useEffect(() => {
         setGame(games.find(e => e.id == id))
-    }, [games])
+    }, [games, game])
 
     return (
         <div className="Game-Wrapper">
@@ -25,12 +25,16 @@ function GamePage() {
                 </div>
             </div>
             <div className='Reviews'>
-                <Review/>
-                <Review/>
-                <Review/>
-                <Review/>
-                <Review/>
-                <Review/>
+                {game?.reviews?.map(e => {
+                    return (
+                        <Review
+                            key= {e.id}
+                            title= {e.title}
+                            body= {e.body} 
+                            score= {e.score}
+                        />
+                    )
+                })}
             </div>
         </div>
     )
