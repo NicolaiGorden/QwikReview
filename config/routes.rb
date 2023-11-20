@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   #GAMES
   resources :games, only: [:index, :create, :show]
 
+  #REVIEWS
+  resources :reviews, only: [:index, :create, :show, :update, :destroy]
+
   get '*path',
     to: 'fallback#index',
     constraints: ->(req) { !req.xhr? && req.format.html? }
