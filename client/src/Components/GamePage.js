@@ -33,6 +33,11 @@ function GamePage() {
         navigate(`/gate`)
     }
 
+    function handleNewReview(e) {
+        e.preventDefault()
+        navigate(`/review/${id}`)
+    }
+
     return (
         <div className="Game-Wrapper">
             <div className='Info'>
@@ -45,7 +50,12 @@ function GamePage() {
                     {game?.average_score ? <div className='Average-Score'>{game?.average_score}/10</div> : null}
                 </div>
                 {user ?
-                    <button className="New-Review-Button">{owned ? 'EDIT REVIEW' : '+ NEW REVIEW'}</button>
+                    <button 
+                        className="New-Review-Button"
+                        onClick={handleNewReview}
+                    >
+                        {owned ? 'EDIT REVIEW' : '+ NEW REVIEW'}
+                    </button>
                 :
                     <ul className="Gameul">
                         <li className="Game-Login">

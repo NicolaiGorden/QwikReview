@@ -46,6 +46,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    justify-content: center;
 }
 
 .Game-Name {
@@ -56,6 +57,7 @@
     font-size: 25px;
     font-style: italic;
     font-weight: 900;
+    margin-top: -30px;
 }
 
 .Game-Name-Small {

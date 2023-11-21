@@ -4,6 +4,7 @@ import WithNav from "./Components/WithNav";
 import Gate from "./Components/Gate";
 import Library from "./Components/Library";
 import GamePage from "./Components/GamePage";
+import ReviewPage from "./Components/ReviewPage";
 
 export const LoginContext = createContext()
 export const GamesContext = createContext()
@@ -46,6 +47,14 @@ function App() {
                 <Route 
                   path="/game/:id"
                   element= {<GamePage/>}
+                />
+                <Route 
+                  path="/review"
+                  element= {<ReviewPage/>}
+                />
+                <Route 
+                  path="/review/:id"
+                  element= {<ReviewPage/>}
                 />
               </Route>
 
