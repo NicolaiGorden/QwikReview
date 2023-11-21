@@ -113,3 +113,44 @@
     align-items: center;
     margin-left: 10px
 }
+
+.Gameul {
+    list-style-type: none;
+    color: rgb(245, 245, 245);
+    font-family: 'PT Sans', sans-serif;
+}
+
+.Game-Login {
+    margin: 20px 0px;
+    font-size: 16px;
+}
+
+.Game-Login-Button {
+    font-family: 'PT Sans', sans-serif;
+    color: rgb(245, 245, 245);
+    border: 1px solid rgb(245, 245, 245);
+    background-color: transparent;
+    outline-width: 2px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 4px 6px;
+    margin-left: 3px;
+}
+
+.New-Review-Button {
+    background-color: rgb(77, 135, 210);
+    border: 2px solid rgb(77, 135, 210);
+    border-radius: 50px;
+    transition: .2s;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color:rgb(245, 245, 245);
+    padding: 10px
+}
+
+.New-Review-Button:hover {
+    background-color: rgb(131, 170, 221);
+    border: 2px solid rgb(131, 170, 221);
+    border-radius: 50px;
+}
