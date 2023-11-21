@@ -18,6 +18,11 @@ function Navbar() {
         navigate('/gate/signup')
     }
 
+    function toLibrary(e) {
+        e.preventDefault()
+        navigate('/')
+    }
+
     function onLogout(e) {
         e.preventDefault();
         fetch("/logout", {
@@ -28,7 +33,7 @@ function Navbar() {
     return (
         <header>
             <nav>
-                <h1 className="title">QwikReview</h1>
+                <h1 className="title" onClick={toLibrary}>QwikReview</h1>
                 <ul className="Navul">
                     { user ?
                         <>

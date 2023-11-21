@@ -1,8 +1,7 @@
 class ReviewSerializer < ActiveModel::Serializer
-  attributes :id, :title, :body, :score
-  # :username
+  attributes :id, :title, :body, :score, :username
 
-  # def username
-  #   self.object.user
-  # end
+  def username
+    object.user.username
+  end
 end

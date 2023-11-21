@@ -1,6 +1,6 @@
 #USERS
 User.create(username: "Luigi", password: "Ilovemybro")
-User.create(username: "Sora", password: "Kingdomheartsislight")
+User.create(username: "Wright", password: "Stepladder")
 User.create(username: "MasterChief", password: "Cortana")
 User.create(username: "Toriel", password: "SnailpieGOATed")
 User.create(username: "Monokuma", password: "Punishmenttime")
@@ -40,7 +40,7 @@ Review.create(title:"testreview7", body:"Lorem ipsum dolor sit amet, consectetur
 Review.create(title:"testreview8", body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac velit leo. Maecenas condimentum ante eget tellus interdum sagittis. Fusce dictum neque magna, quis commodo elit venenatis et. Fusce scelerisque est quis mi mollis, eget dictum tortor.", user_id:4, game_id:2, score:7)
 Review.create(title:"testreview9", body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac velit leo. Maecenas condimentum ante eget tellus interdum sagittis. Fusce dictum neque magna, quis commodo elit venenatis et. Fusce scelerisque est quis mi mollis, eget dictum tortor.", user_id:5, game_id:2, score:2)
 Review.create(title:"testreview10", body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac velit leo. Maecenas condimentum ante eget tellus interdum sagittis. Fusce dictum neque magna, quis commodo elit venenatis et. Fusce scelerisque est quis mi mollis, eget dictum tortor.", user_id:5, game_id:3, score:9)
-Review.create(title:"testreview11", body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac velit leo. Maecenas condimentum ante eget tellus interdum sagittis. Fusce dictum neque magna, quis commodo elit venenatis et. Fusce scelerisque est quis mi mollis, eget dictum tortor.", user_id:0, game_id:17, score:10)
+Review.create(title:"testreview11", body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac velit leo. Maecenas condimentum ante eget tellus interdum sagittis. Fusce dictum neque magna, quis commodo elit venenatis et. Fusce scelerisque est quis mi mollis, eget dictum tortor.", user_id:5, game_id:17, score:10)
 Review.create(title:"testreview12", body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac velit leo. Maecenas condimentum ante eget tellus interdum sagittis. Fusce dictum neque magna, quis commodo elit venenatis et. Fusce scelerisque est quis mi mollis, eget dictum tortor.", user_id:1, game_id:17, score:3)
 Review.create(title:"testreview13", body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac velit leo. Maecenas condimentum ante eget tellus interdum sagittis. Fusce dictum neque magna, quis commodo elit venenatis et. Fusce scelerisque est quis mi mollis, eget dictum tortor.", user_id:2, game_id:17, score:7)
 Review.create(title:"testreview14", body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac velit leo. Maecenas condimentum ante eget tellus interdum sagittis. Fusce dictum neque magna, quis commodo elit venenatis et. Fusce scelerisque est quis mi mollis, eget dictum tortor.", user_id:3, game_id:17, score:9)

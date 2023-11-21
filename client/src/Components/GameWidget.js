@@ -14,10 +14,10 @@ function GameWidget({id, guid, art, name}) {
 
     return (
         <div onClick={clickGame}class="game-widget">
-                <div class="title-card">    
-                    <div class="title-text">{name}</div>
+                <div className="title-card">    
+                    <div className="title-text">{name}</div>
                 </div>
-            <img class="library-img" src={art} alt={name}/>
+            <img className="library-img" src={art} alt={name}/>
         </div>
     )
 }

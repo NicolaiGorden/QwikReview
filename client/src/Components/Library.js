@@ -7,10 +7,26 @@ function Library() {
 
     const [games, setGames] = useContext(GamesContext)
 
+    const [filterResults, setFilterResults] = useState([])
+
+    const [query, setQuery] = useState('')
+
+    useEffect(() => {
+        setFilterResults(games)
+    }, [games])
+
+    useEffect(() => {
+        if (query) {
+            setFilterResults(games.filter((game) => game.name.toLowerCase().includes(query.toLowerCase())))
+        } else {
+            setFilterResults(games)
+        }
+    }, [query])
+
     return (
         <div className="LibraryWrapper">
             <div className="Library">
-                {games.map(e => {
+                {filterResults.map(e => {
                     return (
                         <GameWidget
                             guid={e.guid}
@@ -23,7 +39,13 @@ function Library() {
                 })}
             </div>
             <div className="Sidebar">
-                
+                <input
+                    className="Search-Input"
+                    placeholder="Search by Title..."
+                    type="Text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
             </div>
         </div>
     )

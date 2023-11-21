@@ -19,7 +19,7 @@ function GamePage() {
     return (
         <div className="Game-Wrapper">
             <div className='Info'>
-                <h1 className='Game-Name'>{game?.name}</h1>
+                <h1 className={game?.name?.length > 25 ? 'Game-Name-Small' : 'Game-Name'}>{game?.name}</h1>
                 <div className="Game-Big">
                     <img className="Game-Big-Img" src={game?.art} alt={game?.name}/>
                 </div>
@@ -36,6 +36,7 @@ function GamePage() {
                             title= {e.title}
                             body= {e.body} 
                             score= {e.score}
+                            username= {e.username}
                         />
                     )
                 })}

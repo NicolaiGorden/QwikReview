@@ -14,7 +14,7 @@ function Review({username, userImage, title, body, score }) {
                         className='Review-User-Img'
                         style={{backgroundImage: "url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png')"}}
                     ></div>
-                    <div className='Review-Username'>Username</div>
+                    <div className='Review-Username'>{username}</div>
                 </div>
             </div>
             <div className='Content'>
