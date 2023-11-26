@@ -20,11 +20,11 @@ class ReviewsController < ApplicationController
     def update
         user = User.find_by(id: session[:user_id])
         review = user.reviews.find_by(id: params[:id])
-        if bid
+        if review
             if review.update(review_params)
-                render json: bid
+                render json: review
             else
-                render json: { errors: bid.errors.full_messages }, status: :unprocessable_entity
+                render json: { errors: review.errors.full_messages }, status: :unprocessable_entity
             end
         else
             render json: {error: "Review not found"}, status: :not_found

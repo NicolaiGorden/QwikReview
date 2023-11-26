@@ -87,7 +87,6 @@ function ReviewPage() {
             .then(res => {
                 if (res.ok){
                     res.json().then((review) => {
-                        console.log(`Review Made: ${review}`)
                         let allGames = games
                         const gameIndex = allGames.findIndex((g) => g.id === game.id)
                         allGames[gameIndex].reviews.push(review)
@@ -138,7 +137,67 @@ function ReviewPage() {
                 }
             })
         } else {
-            console.log('u hab dis gaem alrebbie.（。々°）')
+            const myReview = user?.reviews?.find(e => e.guid == game.guid)
+            fetch(`/reviews/${myReview.id}`, {
+                method:'PATCH',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({
+                    title: titleInput,
+                    body: reviewBody,
+                    score,
+                    game_id: game?.id
+                })
+            })
+            .then (res => {
+                if (res.ok) {
+                    console.log('good')
+                    res.json().then((review) => {
+                        let allGames = games
+                        const gameIndex = allGames.findIndex((g) => g.id === game.id)
+                        const myReview = user?.reviews?.find(e => e.guid == game.guid)
+                        const myReviewIndex = (allGames[gameIndex]?.reviews?.findIndex((r) => r.id === myReview.id))
+                        allGames[gameIndex].reviews[myReviewIndex] = review
+
+                        let scores = (allGames[gameIndex]?.reviews?.map((r) => r.score))
+                        const newAverage = (scores?.reduce(function (avg, value, _, { length }) {
+                            return avg + value / length;
+                        }, 0))
+                        allGames[gameIndex].average_score = newAverage
+
+                        let me = user
+                        const userReviewIndex = me.reviews.findIndex((r) => r.id === review.id)
+                        me.reviews[userReviewIndex] = review
+                        setUser(me)
+    
+                        setGames(allGames)
+                        navigate(`/game/${game.id}`)
+                    })
+                } else {
+                    res.json().then((err) => {
+                        console.log(err)
+                        err.errors?.map(e => {
+                            
+                            switch (e) {
+                                case "Title can't be blank":
+                                    setTitleError('Required')
+                                    break;
+                                case "Body can't be blank":
+                                    setBodyError('Required')
+                                    break;
+                                case "Body is too long (maximum is 280 characters)":
+                                    setBodyError('Too long! (max 280 bytes)')
+                                    break;
+                                case 'User already reviewed!':
+                                    setBodyError("You've already reviewed. If you're viewing this message, reload the page.")
+                                    break;
+                                case 'Not Authorized':
+                                    setBodyError("Not logged in!")
+                                    break;
+                            }
+                        })
+                    })
+                }
+            })
         }
     }
 
@@ -207,7 +266,7 @@ function ReviewPage() {
                             </button>
                         </div>
 
-                        <button type="submit" class="Post-Review-Button">{owned ? 'Update Review' : 'Post Review'}</button>
+                        <button type="submit" className="Post-Review-Button">{owned ? 'Update Review' : 'Post Review'}</button>
                     </div>
                 </form>
         </div>

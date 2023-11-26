@@ -34,7 +34,7 @@ function Gate() {
         if (mode === 'signup') {
             setSignup(true)
         }
-    }, [])
+    }, [user])
 
     function onLoginSubmit(e) {
         e.preventDefault()
