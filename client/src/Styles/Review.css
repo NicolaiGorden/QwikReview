@@ -9,6 +9,17 @@
     margin: 5px 0px;
 }
 
+.Review-Mine {
+    background-color: rgb(77, 135, 210);
+    max-width: 100%;
+    min-width: 100%;
+    height: 200px;
+    display: grid;
+    grid-template-rows: 50px 150px;
+    border-radius: 5px 5px 0px 0px;
+    margin: 5px 0px;
+}
+
 .Title-User {
     display: flex;
     justify-content: space-between;
@@ -95,7 +106,7 @@
     height: 125px;
     width: 125px;
     border-radius: 5px;
-    border: 5px solid rgb(77, 135, 210);
+    border: 3px solid rgb(77, 135, 210);
     font-family: 'Poppins', sans-serif;
     color:rgb(245, 245, 245);
     font-size: 45px;

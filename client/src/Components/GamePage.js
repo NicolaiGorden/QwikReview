@@ -54,7 +54,7 @@ function GamePage() {
                         className="New-Review-Button"
                         onClick={handleNewReview}
                     >
-                        {owned ? 'EDIT REVIEW' : '+ NEW REVIEW'}
+                        {owned ? 'UPDATE REVIEW' : '+ NEW REVIEW'}
                     </button>
                 :
                     <ul className="Gameul">

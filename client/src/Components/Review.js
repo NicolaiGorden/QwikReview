@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { LoginContext } from '../App';
 import styles from '../Styles/Review.css'
 
 function Review({username, userImage, title, body, score }) {
 
-    const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac mauris faucibus, malesuada nunc a, molestie ante. In dapibus lectus vehicula libero venenatis, finibus vulputate velit ultricies. Nunc ac commodo arcu, eget sagittis libero. Suspendisse pretium commodo finibus. Curabitur massa nunc."
+    const [user, setUser] = useContext(LoginContext)
     
     return (
-        <div className='Review'>
+        <div className={username === user.username ? 'Review-Mine' : 'Review'}>
             <div className='Title-User'>
                 <div className='Review-Title'>{title}</div>
                 <div className='Review-Header'>

@@ -69,6 +69,11 @@
     border-radius: 10px;
 }
 
+.Input-Error:focus {
+    border: 2px solid rgb(77, 135, 210);
+    outline:none;
+}
+
 .Gate-Input:focus {
     border: 2px solid rgb(77, 135, 210);
     outline:none;
@@ -98,6 +103,12 @@
 .Entry-Button:hover {
     background-color: rgb(131, 170, 221);
     border: 2px solid rgb(131, 170, 221);
+    border:none;
+}
+
+.Entry-Button:active {
+    box-shadow: inset 0 0 10px rgb(60, 111, 178);
+    border:none;
 }
 
 .Mode-Swap {

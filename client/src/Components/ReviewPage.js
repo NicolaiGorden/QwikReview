@@ -1,29 +1,138 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { GamesContext, LoginContext } from '../App';
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { MdOutlineArrowDropUp, MdOutlineArrowDropDown } from "react-icons/md"
+import styles from '../Styles/ReviewPage.css'
 
 function ReviewPage() {
 
     const [games, setGames] = useContext(GamesContext)
     const [user, setUser] = useContext(LoginContext)
-
     const [game, setGame] = useState('')
+    const [owned, setOwned] = useState(false)
+
+    const [searchInput, setSearchInput] = useState('')
+    const [titleInput, setTitleInput] = useState('')
+    const [reviewBody, setReviewBody] = useState('')
+    const [score, setScore] = useState(1)
+
+    const [searchFocus, setSearchFocus] = useState(false)
+    
+    const [error, setError] = useState('')
 
     const { id } = useParams()
 
     useEffect(() => {
         setGame(games.find(e => e.id == id))
+        console.log(game)
+        console.log(user?.reviews?.find(e => e.guid == game?.guid))
     }, [games, game])
+    
+    useEffect(() => {
+        if (user?.reviews?.find(e => e.guid == game?.guid)) {
+            const myReview = user?.reviews?.find(e => e.guid == game.guid)
+            setOwned(true)
+            setTitleInput(myReview.title)
+            setReviewBody(myReview.body)
+            setScore(myReview.score)
+        }
+    }, [game])
+
+    function handleSearchChange(value) {
+        setSearchInput(value)
+    }
+
+    function handleTitleChange(value) {
+        setTitleInput(value)
+    }
+
+    function handleReviewChange(value) {
+        setReviewBody(value)
+    }
+
+    function handleUpClick(e) {
+        e.preventDefault()
+        if (score < 10) {
+            setScore(score + 1)
+        }
+    }
+
+    function handleDownClick(e) {
+        e.preventDefault()
+        if (score > 1) {
+            setScore(score - 1)
+        }
+    }
 
     return (
-        <div className="Game-Wrapper">
-        <div className='Info'>
+        <div className="Review-Game-Wrapper">
+        <div className='Review-Info'>
             <h1 className={game?.name?.length > 25 ? 'Game-Name-Small' : 'Game-Name'}>{game?.name}</h1>
-            <div className="Game-Big">
-                <img className="Game-Big-Img" src={game?.art} alt={game?.name}/>
-            </div>
+            { game 
+                ?
+                <div className="Game-Big">
+                    <img className="Game-Big-Img" src={game?.art} alt={game?.name}/>
+                </div>
+
+            :
+                <div className="">
+                    Search for a game to review.
+                </div>
+            }
         </div>
-        <div className='Reviews'>
+        <div className='Review-Form-Body'>
+
+                <label className ="Review-Label">Search for a game:</label> 
+                <div className = {searchFocus ? "Game-Search-Input-Focus" : "Game-Search-Space"}>
+                <FaMagnifyingGlass size='1.2em'id="search-icon"/>
+                    <input
+                        className = "Game-Search-Input"
+                        placeholder = "Search for games..."
+                        value = {searchInput}
+                        onChange = {(e) => handleSearchChange(e.target.value)}
+                        onFocus = {(e) => setSearchFocus(true)}
+                        onBlur = {(e) => setSearchFocus(false)}
+                    />
+                </div>
+
+                <form className='Review-Form'>
+                    <label className="Review-Label">Name your review:</label> 
+                    <input
+                        className = {error ? "Game-Title-Input-Error": "Game-Title-Input"}
+                        placeholder= "My Review"
+                        value = {titleInput}
+                        onChange = {(e) => handleTitleChange(e.target.value)}
+                    />
+                    <div className="Review-Error-Msg">{error ? error : null}</div>
+
+                    <label className="Review-Label">Review:</label>
+                    <textarea 
+                        className={error ? 'Body-Input-Error': 'Body-Input'}
+                        placeholder= {`Thoughts on ${game?.name}? (280 chars max.)`}
+                        value={reviewBody}
+                        onChange={(e) => handleReviewChange(e.target.value)}
+                    />
+                    <div className="Review-Error-Msg">{error ? error : null}</div>
+
+                    <div className="Score-Button">
+                        <div className="Review-Score-Space">
+                            <label className="Score-Label">Score:</label>
+                            <div className= "Score-Select">{score}</div>
+                        </div>
+                        <div className="Arrows">
+                            <button className="Up" onClick={handleUpClick}>
+                                <MdOutlineArrowDropUp size='1.5em'/>
+                            </button>
+                            <div className="Divider"/>
+                            <button className="Down" onClick={handleDownClick}>
+                                <MdOutlineArrowDropDown size='1.5em'/>    
+                            </button>
+                        </div>
+
+                        <button type="submit" class="Post-Review-Button">{owned ? 'Update Review' : 'Post Review'}</button>
+                    </div>
+                </form>
         </div>
     </div>
     )
