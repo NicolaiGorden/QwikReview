@@ -27,6 +27,94 @@
     padding: 20px 2%
 }
 
+.Name-Trash-Container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.Trash {
+    background-color: rgb(60, 60, 60);
+    width: 30px;
+    height: 30px;
+    transition: .2s;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(245, 245, 245);
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.Trash-On {
+    background-color: rgb(101, 101, 101);
+    width: 30px;
+    height: 30px;
+    transition: .2s;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(245, 245, 245);
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.Trash:hover {
+    background-color: rgb(101, 101, 101);
+}
+
+.Trash-On:hover {
+    background-color: rgb(128, 128, 128);
+}
+
+.Trash:active {
+    box-shadow: inset 0 0 10px rgb(69, 69, 69);
+    border:none;
+}
+
+.Trash-On:active {
+    box-shadow: inset 0 0 10px rgb(69, 69, 69);
+    border:none;
+}
+
+.Delete-Button {
+    background-color: rgb(188, 54, 54);
+    border: 2px solid rgb(188, 54, 54);
+    border-radius: 50px;
+    transition: .2s;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color:rgb(245, 245, 245);
+    padding: 10px;
+    margin-left: 10px;
+    height: 30px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border:none;
+}
+
+.Delete-Off {
+    display:none;
+}
+
+.Delete-Button:hover {
+    background-color: rgb(215, 81, 81);
+    border: 2px solid rgb(215, 81, 81);
+    border-radius: 50px;
+    border:none;
+}
+
+.Delete-Button:active {
+    box-shadow: inset 0 0 10px rgb(138, 32, 32);
+    border:none;
+}
+
 .Review-Title {
     font-family: 'Poppins', sans-serif;
     color:rgb(245, 245, 245);

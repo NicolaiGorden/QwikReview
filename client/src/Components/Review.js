@@ -1,15 +1,35 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { LoginContext } from '../App';
+import { FaTrashAlt } from "react-icons/fa";
 import styles from '../Styles/Review.css'
 
 function Review({username, userImage, title, body, score }) {
 
     const [user, setUser] = useContext(LoginContext)
+    const [deleteMode, setDeleteMode] = useState(false)
     
+    function deleteToggle() {
+        setDeleteMode(!deleteMode)
+    }
+
     return (
         <div className={username === user.username ? 'Review-Mine' : 'Review'}>
             <div className='Title-User'>
-                <div className='Review-Title'>{title}</div>
+                <div className="Name-Trash-Container">
+                    <div className='Review-Title'>{title}</div>
+                    {   username === user.username ?
+                        <>
+                            <div className={ !deleteMode ? 'Trash' : 'Trash-On' } onClick={deleteToggle}>
+                                <FaTrashAlt />
+                            </div>
+                            <button className= { !deleteMode ? 'Delete-Button Delete-Off' : 'Delete-Button' }>
+                                DELETE REVIEW
+                            </button>
+                        </>
+                        :
+                        null
+                    }
+                </div>
                 <div className='Review-Header'>
                     <div 
                         className='Review-User-Img'
