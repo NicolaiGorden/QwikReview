@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { GamesContext, LoginContext } from '../App';
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdOutlineArrowDropUp, MdOutlineArrowDropDown } from "react-icons/md"
@@ -11,6 +11,7 @@ function ReviewPage() {
     const [user, setUser] = useContext(LoginContext)
     const [game, setGame] = useState('')
     const [owned, setOwned] = useState(false)
+    const navigate = useNavigate();
 
     const [searchInput, setSearchInput] = useState('')
     const [titleInput, setTitleInput] = useState('')
@@ -68,6 +69,8 @@ function ReviewPage() {
 
     function handleReviewSubmit(e) {
         e.preventDefault()
+        setTitleError('')
+        setBodyError('')
         fetch('/reviews', {
             method:"POST",
             headers: {
@@ -84,25 +87,52 @@ function ReviewPage() {
             if (res.ok){
                 res.json().then((review) => {
                     console.log(`Review Made: ${review}`)
+                    let allGames = games
+                    const gameIndex = allGames.findIndex((g) => g.id === game.id)
+                    allGames[gameIndex].reviews.push(review)
+
+                    let scores = (allGames[gameIndex]?.reviews?.map((r) => r.score))
+                    const newAverage = (scores?.reduce(function (avg, value, _, { length }) {
+                        return avg + value / length;
+                    }, 0))
+
+                    allGames[gameIndex].average_score = newAverage
+
+                    setGames(allGames)
+
+                    
+
+                    let me = user
+                    me.reviews.push(review)
+                    setUser(me)
+                    
+                    navigate(`/game/${game.id}`)
                 })
             } else {
                 res.json().then((err) => {
-                    err.errors.map(e => {
-                        switch (e) {
-                            case "Title can't be blank":
-                                setTitleError('Required')
-                                break;
-                            case "Body can't be blank":
-                                setBodyError('Required')
-                                break;
-                            case "Body is too long (maximum is 280 characters)":
-                                setBodyError('Too long! (max 280 bytes)')
-                                break;
-                            case 'User already reviewed!':
-                                setBodyError("You've already reviewed. If you're viewing this message, reload the page.")
-                                break;
-                        }
-                    })
+                    if (err.errors) {
+                        err.errors.map(e => {
+                            switch (e) {
+                                case "Title can't be blank":
+                                    setTitleError('Required')
+                                    break;
+                                case "Body can't be blank":
+                                    setBodyError('Required')
+                                    break;
+                                case "Body is too long (maximum is 280 characters)":
+                                    setBodyError('Too long! (max 280 bytes)')
+                                    break;
+                                case 'User already reviewed!':
+                                    setBodyError("You've already reviewed. If you're viewing this message, reload the page.")
+                                    break;
+                                case 'Not Authorized':
+                                    setBodyError("Not logged in!")
+                                    break;
+                            }
+                        })
+                    } else if (err.error === 'Not Authorized') {
+                        setBodyError('You must be logged in to post a review.')
+                    }
                 })
             }
         })
