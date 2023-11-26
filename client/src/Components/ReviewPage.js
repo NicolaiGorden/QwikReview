@@ -87,7 +87,7 @@ function ReviewPage() {
             .then(res => {
                 if (res.ok){
                     res.json().then((review) => {
-                        let allGames = games
+                        let allGames = [...games]
                         const gameIndex = allGames.findIndex((g) => g.id === game.id)
                         allGames[gameIndex].reviews.push(review)
 
@@ -152,7 +152,7 @@ function ReviewPage() {
                 if (res.ok) {
                     console.log('good')
                     res.json().then((review) => {
-                        let allGames = games
+                        let allGames = [...games]
                         const gameIndex = allGames.findIndex((g) => g.id === game.id)
                         const myReview = user?.reviews?.find(e => e.guid == game.guid)
                         const myReviewIndex = (allGames[gameIndex]?.reviews?.findIndex((r) => r.id === myReview.id))

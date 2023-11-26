@@ -20,7 +20,7 @@ function GamePage() {
 
     useEffect(() => {
         setGame(games.find(e => e.id == id))
-    }, [games, game])
+    }, [games, game, onReviewDelete])
 
     useEffect(() => {
         if (user?.reviews?.find(e => e.guid == game.guid)) {
@@ -38,6 +38,38 @@ function GamePage() {
         navigate(`/review/${id}`)
     }
 
+    function onReviewDelete(e) {
+        e.preventDefault()
+        const myReview = user?.reviews?.find(e => e.guid == game.guid)
+        fetch(`/reviews/${myReview.id}`, {
+            method: "DELETE",
+        })
+        .then (() => {
+            let allGames = [...games]
+            const gameIndex = allGames.findIndex((g) => g.id === game.id)
+            const myReview = user?.reviews?.find(e => e.guid == game.guid)
+            const myReviewIndex = (allGames[gameIndex]?.reviews?.findIndex((r) => r.id === myReview.id))
+            if (myReviewIndex > -1) {
+                allGames[gameIndex].reviews.splice(myReviewIndex, 1)
+            }
+
+            let scores = (allGames[gameIndex]?.reviews?.map((r) => r.score))
+            const newAverage = (scores?.reduce(function (avg, value, _, { length }) {
+                return avg + value / length;
+            }, 0))
+            allGames[gameIndex].average_score = newAverage
+            setGames(allGames)
+
+            let me = user
+            const userReviewIndex = me.reviews.findIndex(e => e.guid == game.guid)
+            if (userReviewIndex > -1) {
+                me.reviews.splice(userReviewIndex, 1)
+            }
+            setUser(me)
+            setOwned(false)
+        })
+    }
+
     return (
         <div className="Game-Wrapper">
             <div className='Info'>
@@ -47,7 +79,7 @@ function GamePage() {
                 </div>
                 <div className='Average-Score-Space'>
                     <div>{game?.average_score ? 'User Rating:' : 'Not yet rated!'}</div>
-                    {game?.average_score ? <div className='Average-Score'>{game?.average_score}/10</div> : null}
+                    {game?.average_score ? <div className='Average-Score'>{Math.round(game?.average_score * 10) / 10}/10</div> : null}
                 </div>
                 {user ?
                     <button 
@@ -76,6 +108,8 @@ function GamePage() {
                             body= {e.body} 
                             score= {e.score}
                             username= {e.username}
+                            game= {game}
+                            onReviewDelete = {onReviewDelete}
                         />
                     )
                 })}

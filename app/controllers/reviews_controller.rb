@@ -31,6 +31,17 @@ class ReviewsController < ApplicationController
         end
     end
 
+    def destroy
+        user = User.find_by(id: session[:user_id])
+        review = user.reviews.find_by(id: params[:id])
+        if review
+            review.destroy
+            head :no_content
+        else 
+            render json: { error: "review not found"}, status: :not_found
+        end
+    end
+
     private
 
     def review_params

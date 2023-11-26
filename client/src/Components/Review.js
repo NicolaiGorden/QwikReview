@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { LoginContext } from '../App';
+import { LoginContext, GamesContext } from '../App';
 import { FaTrashAlt } from "react-icons/fa";
 import styles from '../Styles/Review.css'
 
-function Review({username, userImage, title, body, score }) {
+function Review({username, userImage, title, body, score, game, onReviewDelete}) {
 
     const [user, setUser] = useContext(LoginContext)
     const [deleteMode, setDeleteMode] = useState(false)
+    const [games, setGames] = useContext(GamesContext)
     
     function deleteToggle() {
         setDeleteMode(!deleteMode)
@@ -17,12 +18,12 @@ function Review({username, userImage, title, body, score }) {
             <div className='Title-User'>
                 <div className="Name-Trash-Container">
                     <div className='Review-Title'>{title}</div>
-                    {   username === user.username ?
+                    {username === user.username ?
                         <>
                             <div className={ !deleteMode ? 'Trash' : 'Trash-On' } onClick={deleteToggle}>
                                 <FaTrashAlt />
                             </div>
-                            <button className= { !deleteMode ? 'Delete-Button Delete-Off' : 'Delete-Button' }>
+                            <button onClick={onReviewDelete} className= { !deleteMode ? 'Delete-Button Delete-Off' : 'Delete-Button' }>
                                 DELETE REVIEW
                             </button>
                         </>
