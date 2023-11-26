@@ -21,12 +21,13 @@ function ReviewPage() {
     
     const [error, setError] = useState('')
 
+    const [titleError, setTitleError] = useState('')
+    const [bodyError, setBodyError] = useState('')
+
     const { id } = useParams()
 
     useEffect(() => {
         setGame(games.find(e => e.id == id))
-        console.log(game)
-        console.log(user?.reviews?.find(e => e.guid == game?.guid))
     }, [games, game])
     
     useEffect(() => {
@@ -65,6 +66,48 @@ function ReviewPage() {
         }
     }
 
+    function handleReviewSubmit(e) {
+        e.preventDefault()
+        fetch('/reviews', {
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: titleInput,
+                body: reviewBody,
+                score,
+                game_id: game?.id
+            })
+        })
+        .then(res => {
+            if (res.ok){
+                res.json().then((review) => {
+                    console.log(`Review Made: ${review}`)
+                })
+            } else {
+                res.json().then((err) => {
+                    err.errors.map(e => {
+                        switch (e) {
+                            case "Title can't be blank":
+                                setTitleError('Required')
+                                break;
+                            case "Body can't be blank":
+                                setBodyError('Required')
+                                break;
+                            case "Body is too long (maximum is 280 characters)":
+                                setBodyError('Too long! (max 280 bytes)')
+                                break;
+                            case 'User already reviewed!':
+                                setBodyError("You've already reviewed. If you're viewing this message, reload the page.")
+                                break;
+                        }
+                    })
+                })
+            }
+        })
+    }
+
     return (
         <div className="Review-Game-Wrapper">
         <div className='Review-Info'>
@@ -96,24 +139,24 @@ function ReviewPage() {
                     />
                 </div>
 
-                <form className='Review-Form'>
+                <form className='Review-Form' onSubmit={handleReviewSubmit}>
                     <label className="Review-Label">Name your review:</label> 
                     <input
-                        className = {error ? "Game-Title-Input-Error": "Game-Title-Input"}
+                        className = {titleError ? "Game-Title-Input-Error": "Game-Title-Input"}
                         placeholder= "My Review"
                         value = {titleInput}
                         onChange = {(e) => handleTitleChange(e.target.value)}
                     />
-                    <div className="Review-Error-Msg">{error ? error : null}</div>
+                    <div className="Review-Error-Msg">{titleError ? titleError : null}</div>
 
                     <label className="Review-Label">Review:</label>
                     <textarea 
-                        className={error ? 'Body-Input-Error': 'Body-Input'}
+                        className={bodyError ? 'Body-Input-Error': 'Body-Input'}
                         placeholder= {`Thoughts on ${game?.name}? (280 chars max.)`}
                         value={reviewBody}
                         onChange={(e) => handleReviewChange(e.target.value)}
                     />
-                    <div className="Review-Error-Msg">{error ? error : null}</div>
+                    <div className="Review-Error-Msg">{bodyError ? bodyError : null}</div>
 
                     <div className="Score-Button">
                         <div className="Review-Score-Space">
