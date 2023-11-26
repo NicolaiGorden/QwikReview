@@ -71,71 +71,75 @@ function ReviewPage() {
         e.preventDefault()
         setTitleError('')
         setBodyError('')
-        fetch('/reviews', {
-            method:"POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                title: titleInput,
-                body: reviewBody,
-                score,
-                game_id: game?.id
+        if (!owned) {
+            fetch('/reviews', {
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: titleInput,
+                    body: reviewBody,
+                    score,
+                    game_id: game?.id
+                })
             })
-        })
-        .then(res => {
-            if (res.ok){
-                res.json().then((review) => {
-                    console.log(`Review Made: ${review}`)
-                    let allGames = games
-                    const gameIndex = allGames.findIndex((g) => g.id === game.id)
-                    allGames[gameIndex].reviews.push(review)
+            .then(res => {
+                if (res.ok){
+                    res.json().then((review) => {
+                        console.log(`Review Made: ${review}`)
+                        let allGames = games
+                        const gameIndex = allGames.findIndex((g) => g.id === game.id)
+                        allGames[gameIndex].reviews.push(review)
 
-                    let scores = (allGames[gameIndex]?.reviews?.map((r) => r.score))
-                    const newAverage = (scores?.reduce(function (avg, value, _, { length }) {
-                        return avg + value / length;
-                    }, 0))
+                        let scores = (allGames[gameIndex]?.reviews?.map((r) => r.score))
+                        const newAverage = (scores?.reduce(function (avg, value, _, { length }) {
+                            return avg + value / length;
+                        }, 0))
 
-                    allGames[gameIndex].average_score = newAverage
+                        allGames[gameIndex].average_score = newAverage
 
-                    setGames(allGames)
+                        setGames(allGames)
 
-                    
+                        
 
-                    let me = user
-                    me.reviews.push(review)
-                    setUser(me)
-                    
-                    navigate(`/game/${game.id}`)
-                })
-            } else {
-                res.json().then((err) => {
-                    if (err.errors) {
-                        err.errors.map(e => {
-                            switch (e) {
-                                case "Title can't be blank":
-                                    setTitleError('Required')
-                                    break;
-                                case "Body can't be blank":
-                                    setBodyError('Required')
-                                    break;
-                                case "Body is too long (maximum is 280 characters)":
-                                    setBodyError('Too long! (max 280 bytes)')
-                                    break;
-                                case 'User already reviewed!':
-                                    setBodyError("You've already reviewed. If you're viewing this message, reload the page.")
-                                    break;
-                                case 'Not Authorized':
-                                    setBodyError("Not logged in!")
-                                    break;
-                            }
-                        })
-                    } else if (err.error === 'Not Authorized') {
-                        setBodyError('You must be logged in to post a review.')
-                    }
-                })
-            }
-        })
+                        let me = user
+                        me.reviews.push(review)
+                        setUser(me)
+                        
+                        navigate(`/game/${game.id}`)
+                    })
+                } else {
+                    res.json().then((err) => {
+                        if (err.errors) {
+                            err.errors.map(e => {
+                                switch (e) {
+                                    case "Title can't be blank":
+                                        setTitleError('Required')
+                                        break;
+                                    case "Body can't be blank":
+                                        setBodyError('Required')
+                                        break;
+                                    case "Body is too long (maximum is 280 characters)":
+                                        setBodyError('Too long! (max 280 bytes)')
+                                        break;
+                                    case 'User already reviewed!':
+                                        setBodyError("You've already reviewed. If you're viewing this message, reload the page.")
+                                        break;
+                                    case 'Not Authorized':
+                                        setBodyError("Not logged in!")
+                                        break;
+                                }
+                            })
+                        } else if (err.error === 'Not Authorized') {
+                            setBodyError('You must be logged in to post a review.')
+                        }
+                    })
+                }
+            })
+        } else {
+            console.log('u hab dis gaem alrebbie.（。々°）')
+        }
     }
 
     return (
@@ -156,7 +160,7 @@ function ReviewPage() {
         </div>
         <div className='Review-Form-Body'>
 
-                <label className ="Review-Label">Search for a game:</label> 
+                <label className ="Review-Label Search-Label">Search for a game:</label> 
                 <div className = {searchFocus ? "Game-Search-Input-Focus" : "Game-Search-Space"}>
                 <FaMagnifyingGlass size='1.2em'id="search-icon"/>
                     <input

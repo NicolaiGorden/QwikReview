@@ -32,7 +32,7 @@
 
 .Review-Form {
     width: 100%;
-    height: 700px;
+    height: 500px;
     background-color: #0a0a0a;
     border-radius: 5px 5px 0px 0px;
     margin: 10px;
@@ -49,6 +49,10 @@
     font-size: 16px;
 }
 
+.Search-Label {
+    margin-bottom: -20px;
+}
+
 .Game-Search-Space {
     background-color: transparent;
     color: rgb(245, 245, 245);
@@ -57,7 +61,6 @@
     width: 100%;
     height: 50px;
     padding: 12px 20px;
-    margin: 8px 0px;
     box-sizing: border-box;
     border: 2px solid rgb(193, 193, 193);
     border-radius: 10px;
