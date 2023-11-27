@@ -17,7 +17,7 @@
     overflow-y: scroll;
     justify-content: flex-start;
     gap: 8px;
-
+    overflow-x: hidden;
 }
 
 .Library::-webkit-scrollbar {

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { GamesContext, LoginContext } from '../App';
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdOutlineArrowDropUp, MdOutlineArrowDropDown } from "react-icons/md"
+import fetchJsonp from 'fetch-jsonp'
 import styles from '../Styles/ReviewPage.css'
 
 function ReviewPage() {
@@ -14,6 +15,10 @@ function ReviewPage() {
     const navigate = useNavigate();
 
     const [searchInput, setSearchInput] = useState('')
+    const [searchResults, setSearchResults] = useState([])
+    const [currentGUID, setCurrentGUID] = useState('')
+    const [newGame, setNewGame] = useState(false)
+
     const [titleInput, setTitleInput] = useState('')
     const [reviewBody, setReviewBody] = useState('')
     const [score, setScore] = useState(1)
@@ -27,9 +32,13 @@ function ReviewPage() {
     const [searchSpaceStyle, setSearchSpaceStyle] = useState("Game-Search-Space")
 
     const { id } = useParams()
+    const [idRef, setIdRef] = useState(id)
+    const [newGameId, setNewGameId] = useState(id)
 
     useEffect(() => {
-        setGame(games.find(e => e.id == id))
+        if (idRef) {
+            setGame(games.find(e => e.id == idRef))
+        }
     }, [games, game])
     
     useEffect(() => {
@@ -41,6 +50,44 @@ function ReviewPage() {
             setScore(myReview.score)
         }
     }, [game])
+
+    useEffect(() => {
+        if (games.find(e => e.guid == currentGUID)) {
+            setGame(games.find(e => e.guid == currentGUID))
+            setNewGame(false)
+        } else if (currentGUID) {
+            fetchJsonp(
+                `https://www.giantbomb.com/api/game/${currentGUID}/?api_key=96b1a2f459df7597812987b460af056962057bd6&format=jsonp&field_list=image,guid,name`,
+                {jsonpCallback: 'json_callback'},
+            ).then(res => {
+                if(res.ok) {
+                    res.json().then(data => {
+                        let newGame = {
+                            guid: data.results.guid,
+                            art: data.results.image.original_url,
+                            name: data.results.name,
+                        }
+                        setGame(newGame)
+                        setNewGame(true)
+                    })
+                }
+            })
+            setOwned(false)  
+        }
+    }, [currentGUID])
+
+    useEffect(() => {
+        fetchJsonp(
+            `https://www.giantbomb.com/api/search/?api_key=96b1a2f459df7597812987b460af056962057bd6&format=jsonp&field_list=guid,name&resources=game&query="${searchInput}"`,
+            {jsonpCallback: 'json_callback'},
+        ).then(res => {
+            if(res.ok) {
+                res.json().then(data => {
+                    setSearchResults(data.results)
+                })
+            }
+        })
+    }, [searchInput])
 
     function handleSearchChange(value) {
         setSearchError(false)
@@ -75,74 +122,164 @@ function ReviewPage() {
         setTitleError('')
         setBodyError('')
         if (!owned) {
-            fetch('/reviews', {
-                method:"POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    title: titleInput,
-                    body: reviewBody,
-                    score,
-                    game_id: game?.id
+            if (newGame) {
+                fetch('/games', {
+                    method:"POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(game)
                 })
-            })
-            .then(res => {
-                if (res.ok){
-                    res.json().then((review) => {
-                        let allGames = [...games]
-                        const gameIndex = allGames.findIndex((g) => g.id === game.id)
-                        allGames[gameIndex].reviews.push(review)
+                .then(res => {
+                    if(res.ok){
+                        res.json().then((newG) => {
+                            console.log(setNewGameId(newG.id))
+                            console.log(idRef)
+                            setNewGame(false)
+                            let allGames = [...games]
+                            allGames.push(newG)
+                            setGames(allGames)
+                            fetch('/reviews', {
+                                method:"POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    title: titleInput,
+                                    body: reviewBody,
+                                    score,
+                                    game_id: newG.id
+                                })
+                            })
+                            .then(res => {
+                                if (res.ok){
+                                    res.json().then((review) => {
+                                    const gameIndex = allGames.findIndex((game) => game.id === newG.id)
+                                    allGames[gameIndex].reviews.push(review)
+        
+                                    let scores = (allGames[gameIndex]?.reviews?.map((r) => r.score))
+                                    const newAverage = (scores?.reduce(function (avg, value, _, { length }) {
+                                        return avg + value / length;
+                                    }, 0))
+        
+                                    allGames[gameIndex].average_score = newAverage
+        
+                                    setGames(allGames)
 
-                        let scores = (allGames[gameIndex]?.reviews?.map((r) => r.score))
-                        const newAverage = (scores?.reduce(function (avg, value, _, { length }) {
-                            return avg + value / length;
-                        }, 0))
-
-                        allGames[gameIndex].average_score = newAverage
-
-                        setGames(allGames)
-
-                        
-
-                        let me = user
-                        me.reviews.push(review)
-                        setUser(me)
-                        
-                        navigate(`/game/${game.id}`)
-                    })
-                } else {
-                    res.json().then((err) => {
-                        if (err.errors) {
-                            err.errors.map(e => {
-                                switch (e) {
-                                    case "Title can't be blank":
-                                        setTitleError('Required')
-                                        break;
-                                    case "Body can't be blank":
-                                        setBodyError('Required')
-                                        break;
-                                    case "Body is too long (maximum is 280 characters)":
-                                        setBodyError('Too long! (max 280 bytes)')
-                                        break;
-                                    case 'User already reviewed!':
-                                        setBodyError("You've already reviewed. If you're viewing this message, reload the page.")
-                                        break;
-                                    case 'Not Authorized':
-                                        setBodyError("Not logged in!")
-                                        break;
-                                    case "Game must exist":
-                                        setSearchError("Please find a game!")
-                                        setSearchSpaceStyle("Game-Search-Space-Error")
-                                        break;
+                                    let me = user
+                                    me.reviews.push(review)
+                                    setUser(me)
+                                    
+                                    navigate(`/game/${newG.id}`)
+                                    console.log(newG)
+                                    })
+                                } else {
+                                    res.json().then((err) => {
+                                        if (err.errors) {
+                                            err.errors.map(e => {
+                                                switch (e) {
+                                                    case "Title can't be blank":
+                                                        setTitleError('Required')
+                                                        break;
+                                                    case "Body can't be blank":
+                                                        setBodyError('Required')
+                                                        break;
+                                                    case "Body is too long (maximum is 280 characters)":
+                                                        setBodyError('Too long! (max 280 bytes)')
+                                                        break;
+                                                    case 'User already reviewed!':
+                                                        setBodyError("You've already reviewed. If you're viewing this message, reload the page.")
+                                                        break;
+                                                    case 'Not Authorized':
+                                                        setBodyError("Not logged in!")
+                                                        break;
+                                                    case "Game must exist":
+                                                        setSearchError("Please find a game!")
+                                                        setSearchSpaceStyle("Game-Search-Space-Error")
+                                                        break;
+                                                }
+                                            })
+                                        } else if (err.error === 'Not Authorized') {
+                                            setBodyError('You must be logged in to post a review.')
+                                        }
+                                    })
                                 }
                             })
-                        } else if (err.error === 'Not Authorized') {
-                            setBodyError('You must be logged in to post a review.')
-                        }
+                        })
+                    } else {
+                        res.json().then( (err) => {console.log(err)} )
+                    }
+                }) 
+            } else {
+                fetch('/reviews', {
+                    method:"POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        title: titleInput,
+                        body: reviewBody,
+                        score,
+                        game_id: game?.id
                     })
-                }
-            })
+                })
+                .then(res => {
+                    if (res.ok){
+                        res.json().then((review) => {
+                            let allGames = [...games]
+                            const gameIndex = allGames.findIndex((g) => g.id === game.id)
+                            allGames[gameIndex].reviews.push(review)
+
+                            let scores = (allGames[gameIndex]?.reviews?.map((r) => r.score))
+                            const newAverage = (scores?.reduce(function (avg, value, _, { length }) {
+                                return avg + value / length;
+                            }, 0))
+
+                            allGames[gameIndex].average_score = newAverage
+
+                            setGames(allGames)
+
+                            
+
+                            let me = user
+                            me.reviews.push(review)
+                            setUser(me)
+                            
+                            navigate(`/game/${game.id}`)
+                        })
+                    } else {
+                        res.json().then((err) => {
+                            if (err.errors) {
+                                err.errors.map(e => {
+                                    switch (e) {
+                                        case "Title can't be blank":
+                                            setTitleError('Required')
+                                            break;
+                                        case "Body can't be blank":
+                                            setBodyError('Required')
+                                            break;
+                                        case "Body is too long (maximum is 280 characters)":
+                                            setBodyError('Too long! (max 280 bytes)')
+                                            break;
+                                        case 'User already reviewed!':
+                                            setBodyError("You've already reviewed. If you're viewing this message, reload the page.")
+                                            break;
+                                        case 'Not Authorized':
+                                            setBodyError("Not logged in!")
+                                            break;
+                                        case "Game must exist":
+                                            setSearchError("Please find a game!")
+                                            setSearchSpaceStyle("Game-Search-Space-Error")
+                                            break;
+                                    }
+                                })
+                            } else if (err.error === 'Not Authorized') {
+                                setBodyError('You must be logged in to post a review.')
+                            }
+                        })
+                    }
+                })
+            }
         } else {
             const myReview = user?.reviews?.find(e => e.guid == game.guid)
             fetch(`/reviews/${myReview.id}`, {
@@ -233,17 +370,28 @@ function ReviewPage() {
                                 className = "Game-Search-Input"
                                 placeholder = "Search for games..."
                                 value = {searchInput}
-                                onChange = {(e) => handleSearchChange(e.target.value)}
+                                onChange = {(e) => {
+                                    handleSearchChange(e.target.value)
+                                    setSearchFocus(true)
+                                }}
                                 onFocus = {(e) => setSearchFocus(true)}
                                 onBlur = {(e) => setSearchFocus(false)}
                             />
                         </div>
 
                             <ul className = {searchInput && searchFocus ? "Dropdown" : "Dropdown Gone"}>
-                                <li className = "Dropdown-Item">game1</li>
-                                <li className = "Dropdown-Item">game2</li>
-                                <li className = "Dropdown-Item">game3</li>
-                                <li className = "Dropdown-Item">game4</li>
+                                {searchResults?.map((game) => {
+                                    return (
+                                        <li 
+                                            guid={game.guid}
+                                            onMouseDown= {(e) => {
+                                            e.preventDefault()
+                                            setIdRef('')
+                                            setSearchFocus(false)
+                                            setCurrentGUID(e.target.attributes.guid.value)
+                                        }}className = "Dropdown-Item">{game.name}</li>
+                                    )
+                                })}
                             </ul>
 
                     </div>
