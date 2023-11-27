@@ -35,8 +35,8 @@
     height: 500px;
     background-color: #0a0a0a;
     border-radius: 5px 5px 0px 0px;
-    margin: 10px;
     padding: 12px;
+    margin-top: -20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,9 +58,10 @@
     color: rgb(245, 245, 245);
     font-family: 'PT Sans', sans-serif;
     font-size: 18px;
-    width: 100%;
+    width: 462px;
     height: 50px;
     padding: 12px 20px;
+    margin: 0px 0px -18px 0px;
     box-sizing: border-box;
     border: 2px solid rgb(193, 193, 193);
     border-radius: 10px;
@@ -70,15 +71,33 @@
     align-items: center;
 }
 
-.Game-Search-Input-Focus {
+.Game-Search-Space-Error {
     background-color: transparent;
     color: rgb(245, 245, 245);
     font-family: 'PT Sans', sans-serif;
     font-size: 18px;
-    width: 100%;
+    width: 462px;
     height: 50px;
     padding: 12px 20px;
-    margin: 8px 0px;
+    margin: 0px 0px -18px 0px;
+    box-sizing: border-box;
+    border: 2px solid rgb(188, 54, 54);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Game-Search-Space-Focus {
+    background-color: transparent;
+    color: rgb(245, 245, 245);
+    font-family: 'PT Sans', sans-serif;
+    font-size: 18px;
+    width: 462px;
+    height: 50px;
+    padding: 12px 20px;
+    margin: 0px 0px -18px 0px;
     box-sizing: border-box;
     border: 2px solid rgb(77, 135, 210);
     border-radius: 10px;
@@ -101,6 +120,69 @@
 
 .Game-Search-Input:Focus {
     outline:none;
+}
+
+.Dropdown-Grid {
+    display: grid;
+    grid-template-rows: 100%; 
+    grid-template-columns: 100%;
+}
+
+.Game-Search-Space, .Dropdown, .Game-Search-Space-Error, .Game-Search-Space-Focus {
+    grid-row: 1/1;
+    grid-column: 1/1;
+}
+
+.Dropdown {
+    background-color: rgb(60, 111, 178);
+    border-radius: 5px;
+    color: rgb(245, 245, 245);
+    font-family: 'PT Sans', sans-serif;
+    font-size: 18px;
+    width: 462px;
+    margin: 60px 0px -18px 0px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    list-style-type: none;
+}
+
+.Gone {
+    display: none;
+}
+
+.Dropdown-Item {
+    width: 100%;
+    height: 24px;
+    background-color: rgb(77, 135, 210);
+    margin-top: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border:none;
+    color:rgb(245, 245, 245);
+    padding: 10px;
+    padding: 18px;
+}
+
+.Dropdown-Item:hover {
+    background-color: rgb(131, 170, 221);
+}
+
+.Dropdown-Item:active {
+    box-shadow: inset 0 0 10px rgb(60, 111, 178);
+}
+
+.Dropdown > .Dropdown-Item:first-child {
+    border-radius: 5px;;
+    border-radius: 5px 5px 0px 0px;;
+    margin-top: 0px;
+}
+
+.Dropdown > .Dropdown-Item:last-child {
+    border-radius: 0px 0px 5px 5px;;
 }
 
 .Game-Title-Input {
@@ -311,4 +393,10 @@
 .Post-Review-Button:active {
     box-shadow: inset 0 0 10px rgb(60, 111, 178);
     border:none;
+}
+
+.No-Game {
+    color: rgb(245, 245, 245);
+    font-family: 'PT Sans', sans-serif;
+    font-size: 25px;
 }

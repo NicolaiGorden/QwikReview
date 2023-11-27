@@ -26,6 +26,7 @@ header {
     font-size: 20px;
     font-weight: bold;
     color:rgb(245, 245, 245);
+    margin: 0px 5px;
 }
 
 .Navul {
@@ -51,12 +52,15 @@ nav {
     background-color: transparent;
     outline-width: 2px;
     border-radius: 50px;
-    width: 95px;
+    padding: 10px;
     height: 30px;
     transition: .2s;
     font-family: 'PT Sans', sans-serif;
     font-size: 20px;
     color:rgb(245, 245, 245);
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login {

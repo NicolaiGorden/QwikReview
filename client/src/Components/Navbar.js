@@ -23,6 +23,11 @@ function Navbar() {
         navigate('/')
     }
 
+    function toNewReview(e) {
+        e.preventDefault()
+        navigate('/review')
+    }
+
     function onLogout(e) {
         e.preventDefault();
         fetch("/logout", {
@@ -37,6 +42,7 @@ function Navbar() {
                 <ul className="Navul">
                     { user ?
                         <>
+                            <li className="Navli signup"><button onClick={toNewReview} className="navbutton">+ NEW REVIEW</button></li>
                             <li className="Navli login"><button onClick={onLogout} className="navbutton">LOG OUT</button></li>   
                         </>                 
                     :

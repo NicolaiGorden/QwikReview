@@ -14,9 +14,9 @@ function GameWidget({id, guid, art, name}) {
 
     return (
         <div onClick={clickGame}class="game-widget">
-                <div className="title-card">    
-                    <div className="title-text">{name}</div>
-                </div>
+            <div className="title-card">    
+                <div className="title-text">{name}</div>
+            </div>
             <img className="library-img" src={art} alt={name}/>
         </div>
     )

@@ -19,11 +19,12 @@ function ReviewPage() {
     const [score, setScore] = useState(1)
 
     const [searchFocus, setSearchFocus] = useState(false)
-    
-    const [error, setError] = useState('')
 
     const [titleError, setTitleError] = useState('')
     const [bodyError, setBodyError] = useState('')
+    const [searchError, setSearchError] = useState('')
+
+    const [searchSpaceStyle, setSearchSpaceStyle] = useState("Game-Search-Space")
 
     const { id } = useParams()
 
@@ -42,6 +43,8 @@ function ReviewPage() {
     }, [game])
 
     function handleSearchChange(value) {
+        setSearchError(false)
+        setSearchSpaceStyle("Game-Search-Space")
         setSearchInput(value)
     }
 
@@ -128,6 +131,10 @@ function ReviewPage() {
                                     case 'Not Authorized':
                                         setBodyError("Not logged in!")
                                         break;
+                                    case "Game must exist":
+                                        setSearchError("Please find a game!")
+                                        setSearchSpaceStyle("Game-Search-Space-Error")
+                                        break;
                                 }
                             })
                         } else if (err.error === 'Not Authorized') {
@@ -212,25 +219,35 @@ function ReviewPage() {
                 </div>
 
             :
-                <div className="">
+                <div className="No-Game">
                     Search for a game to review.
                 </div>
             }
         </div>
         <div className='Review-Form-Body'>
+                    <label className ="Review-Label Search-Label">Search for a game:</label> 
+                    <div className='Dropdown-Grid'>
+                        <div className = {searchFocus ? "Game-Search-Space-Focus" : searchSpaceStyle}>
+                            <FaMagnifyingGlass size='1.2em'id="search-icon"/>
+                            <input
+                                className = "Game-Search-Input"
+                                placeholder = "Search for games..."
+                                value = {searchInput}
+                                onChange = {(e) => handleSearchChange(e.target.value)}
+                                onFocus = {(e) => setSearchFocus(true)}
+                                onBlur = {(e) => setSearchFocus(false)}
+                            />
+                        </div>
 
-                <label className ="Review-Label Search-Label">Search for a game:</label> 
-                <div className = {searchFocus ? "Game-Search-Input-Focus" : "Game-Search-Space"}>
-                <FaMagnifyingGlass size='1.2em'id="search-icon"/>
-                    <input
-                        className = "Game-Search-Input"
-                        placeholder = "Search for games..."
-                        value = {searchInput}
-                        onChange = {(e) => handleSearchChange(e.target.value)}
-                        onFocus = {(e) => setSearchFocus(true)}
-                        onBlur = {(e) => setSearchFocus(false)}
-                    />
-                </div>
+                            <ul className = {searchInput && searchFocus ? "Dropdown" : "Dropdown Gone"}>
+                                <li className = "Dropdown-Item">game1</li>
+                                <li className = "Dropdown-Item">game2</li>
+                                <li className = "Dropdown-Item">game3</li>
+                                <li className = "Dropdown-Item">game4</li>
+                            </ul>
+
+                    </div>
+                <div className="Review-Error-Msg">{searchError ? searchError : null}</div>
 
                 <form className='Review-Form' onSubmit={handleReviewSubmit}>
                     <label className="Review-Label">Name your review:</label> 
@@ -245,7 +262,7 @@ function ReviewPage() {
                     <label className="Review-Label">Review:</label>
                     <textarea 
                         className={bodyError ? 'Body-Input-Error': 'Body-Input'}
-                        placeholder= {`Thoughts on ${game?.name}? (280 chars max.)`}
+                        placeholder= {game ? `Thoughts on ${game?.name}? (280 chars max.)` : `My Review (280 chars max.)`}
                         value={reviewBody}
                         onChange={(e) => handleReviewChange(e.target.value)}
                     />
