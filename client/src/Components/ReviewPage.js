@@ -133,8 +133,7 @@ function ReviewPage() {
                 .then(res => {
                     if(res.ok){
                         res.json().then((newG) => {
-                            console.log(setNewGameId(newG.id))
-                            console.log(idRef)
+                            setNewGameId(newG.id)
                             setNewGame(false)
                             let allGames = [...games]
                             allGames.push(newG)
@@ -175,6 +174,20 @@ function ReviewPage() {
                                     })
                                 } else {
                                     res.json().then((err) => {
+                                        fetch(`/games/${newG.id}`, {
+                                            method: "DELETE",
+                                        })
+                                        .then( res => {
+                                            if (res.ok) {
+                                                const gameIndex = allGames.findIndex((game) => game.id === newG.id)
+                                                console.log('game:', allGames[gameIndex])
+                                                if (gameIndex > -1) {
+                                                    allGames.splice(gameIndex, 1)
+                                                }
+                                                setGames(allGames)
+                                            }
+                                        })
+                                        console.log(newG.id)
                                         if (err.errors) {
                                             err.errors.map(e => {
                                                 switch (e) {
