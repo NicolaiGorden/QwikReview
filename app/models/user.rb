@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_secure_password
+    after_create :create_profile
 
     validates :username, length: { minimum: 5 }
     validates :username, presence: true, uniqueness: {message: "already belongs to another user!"}
@@ -7,6 +8,12 @@ class User < ApplicationRecord
 
     has_many :reviews
     has_many :games, through: :reviews
+
+    has_one :profile, dependent: :destroy
+
+    def create_profile
+        Profile.create(user_id: self.id)
+    end
 
     def must_contain_uppercase
         if password != nil

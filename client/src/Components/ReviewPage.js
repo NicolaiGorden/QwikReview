@@ -398,10 +398,11 @@ function ReviewPage() {
                                         <li 
                                             guid={game.guid}
                                             onMouseDown= {(e) => {
-                                            e.preventDefault()
-                                            setIdRef('')
-                                            setSearchFocus(false)
-                                            setCurrentGUID(e.target.attributes.guid.value)
+                                                e.preventDefault()
+                                                setIdRef('')
+                                                setSearchFocus(false)
+                                                setCurrentGUID(e.target.attributes.guid.value)
+                                                setSearchInput(e.target.outerText)
                                         }}className = "Dropdown-Item">{game.name}</li>
                                     )
                                 })}
