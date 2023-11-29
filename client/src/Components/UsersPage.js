@@ -49,8 +49,11 @@ function UsersPage() {
         if (imageData) {
             formData.append('avatar', imageData)
         }
-        formData.append('bio', bio)
-
+        if (bio) {
+            formData.append('bio', bio)
+        } else {
+            formData.append('bio', '')
+        }
         fetch(`/profiles/${id}`, {
             method:'PATCH',
             body: formData

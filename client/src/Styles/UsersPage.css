@@ -27,6 +27,7 @@
     flex-wrap:wrap;
     overflow-y: scroll;
     gap: 8px;
+    overflow-x: hidden;
 }
 
 .User-Reviews-Box {

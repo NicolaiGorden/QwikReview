@@ -9,7 +9,6 @@ class ReviewsController < ApplicationController
     def create
         user = User.find_by(id: session[:user_id])
         review = user.reviews.create(review_params)
-
         if review.valid?
             render json: review, status: :created
         else   

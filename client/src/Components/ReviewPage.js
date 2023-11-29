@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GamesContext, LoginContext } from '../App';
+import { GamesContext, LoginContext, UsersContext } from '../App';
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdOutlineArrowDropUp, MdOutlineArrowDropDown } from "react-icons/md"
 import fetchJsonp from 'fetch-jsonp'
@@ -10,6 +10,7 @@ function ReviewPage() {
 
     const [games, setGames] = useContext(GamesContext)
     const [user, setUser] = useContext(LoginContext)
+    const [users, setUsers] = useContext(UsersContext)
     const [game, setGame] = useState('')
     const [owned, setOwned] = useState(false)
     const navigate = useNavigate();
@@ -133,6 +134,7 @@ function ReviewPage() {
                 .then(res => {
                     if(res.ok){
                         res.json().then((newG) => {
+                            console.log('new:', newG)
                             setNewGameId(newG.id)
                             setNewGame(false)
                             let allGames = [...games]
@@ -165,6 +167,11 @@ function ReviewPage() {
         
                                     setGames(allGames)
 
+                                    let allUsers = users
+                                    let userIndex = allUsers.findIndex((u) => u.id === user.id)
+                                    allUsers[userIndex].reviews.push(review)
+                                    setUsers(allUsers)
+
                                     let me = user
                                     me.reviews.push(review)
                                     setUser(me)
@@ -183,6 +190,7 @@ function ReviewPage() {
                                                     allGames.splice(gameIndex, 1)
                                                 }
                                                 setGames(allGames)
+                                                setNewGame(true)
                                             }
                                         })
                                         if (err.errors) {
@@ -249,7 +257,10 @@ function ReviewPage() {
 
                             setGames(allGames)
 
-                            
+                            let allUsers = users
+                            let userIndex = allUsers.findIndex((u) => u.id === user.id)
+                            allUsers[userIndex].reviews.push(review)
+                            setUsers(allUsers)
 
                             let me = user
                             me.reviews.push(review)
@@ -316,6 +327,11 @@ function ReviewPage() {
                             return avg + value / length;
                         }, 0))
                         allGames[gameIndex].average_score = newAverage
+
+                        let allUsers = users
+                        let userIndex = allUsers.findIndex((u) => u.id === user.id)
+                        allUsers[userIndex].reviews.push(review)
+                        setUsers(allUsers)
 
                         let me = user
                         const userReviewIndex = me.reviews.findIndex((r) => r.id === review.id)

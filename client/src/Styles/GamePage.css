@@ -16,6 +16,7 @@
     align-content: flex-start;
     flex-wrap:wrap;
     overflow-y: scroll;
+    overflow-x: hidden;
     gap: 8px;
 }
 
