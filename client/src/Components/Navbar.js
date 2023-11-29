@@ -10,8 +10,9 @@ function Navbar() {
 
 
     useEffect(() => {
-        console.log(user)
-    }, [])
+
+    }, [user])
+    
     function toLogin(e) {
         e.preventDefault()
         navigate('/gate')
