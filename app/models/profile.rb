@@ -1,5 +1,21 @@
 class Profile < ApplicationRecord
-    belongs_to :user
+    validate :acceptable_image
+    validates :bio, length: { maximum: 300 }
 
-    # https://stackoverflow.com/questions/19292645/ruby-on-rails-creating-a-profile-when-user-is-created
+    belongs_to :user
+    has_one_attached :avatar
+
+    def acceptable_image
+        return unless avatar.attached?
+    
+        unless avatar.blob.byte_size <= 3.megabyte
+          errors.add(:avatar, "is too large")
+        end
+
+        acceptable_types = ["image/jpeg", "image/png"]
+        unless acceptable_types.include?(avatar.content_type)
+            errors.add(:avatar, 'must be jpeg/png')
+        end
+    
+    end
 end

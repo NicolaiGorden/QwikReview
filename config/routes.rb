@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :create, :show]
 
   #PROFILES
-  resources :profiles, only: [:index, :create, :show]
+  resources :profiles, only: [:index, :create, :show, :update]
 
   #GAMES
   resources :games, only: [:index, :create, :show, :destroy]

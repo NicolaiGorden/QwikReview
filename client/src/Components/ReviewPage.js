@@ -360,96 +360,96 @@ function ReviewPage() {
 
     return (
         <div className="Review-Game-Wrapper">
-        <div className='Review-Info'>
-            <h1 className={game?.name?.length > 25 ? 'Game-Name-Small' : 'Game-Name'}>{game?.name}</h1>
-            { game 
-                ?
-                <div className="Game-Big">
-                    <img className="Game-Big-Img" src={game?.art} alt={game?.name}/>
-                </div>
-
-            :
-                <div className="No-Game">
-                    Search for a game to review.
-                </div>
-            }
-        </div>
-        <div className='Review-Form-Body'>
-                    <label className ="Review-Label Search-Label">Search for a game:</label> 
-                    <div className='Dropdown-Grid'>
-                        <div className = {searchFocus ? "Game-Search-Space-Focus" : searchSpaceStyle}>
-                            <FaMagnifyingGlass size='1.2em'id="search-icon"/>
-                            <input
-                                className = "Game-Search-Input"
-                                placeholder = "Search for games..."
-                                value = {searchInput}
-                                onChange = {(e) => {
-                                    handleSearchChange(e.target.value)
-                                    setSearchFocus(true)
-                                }}
-                                onFocus = {(e) => setSearchFocus(true)}
-                                onBlur = {(e) => setSearchFocus(false)}
-                            />
-                        </div>
-
-                            <ul className = {searchInput && searchFocus ? "Dropdown" : "Dropdown Gone"}>
-                                {searchResults?.map((game) => {
-                                    return (
-                                        <li 
-                                            guid={game.guid}
-                                            onMouseDown= {(e) => {
-                                                e.preventDefault()
-                                                setIdRef('')
-                                                setSearchFocus(false)
-                                                setCurrentGUID(e.target.attributes.guid.value)
-                                                setSearchInput(e.target.outerText)
-                                        }}className = "Dropdown-Item">{game.name}</li>
-                                    )
-                                })}
-                            </ul>
-
+            <div className='Review-Info'>
+                <h1 className={game?.name?.length > 25 ? 'Game-Name-Small' : 'Game-Name'}>{game?.name}</h1>
+                { game 
+                    ?
+                    <div className="Game-Big">
+                        <img className="Game-Big-Img" src={game?.art} alt={game?.name}/>
                     </div>
-                <div className="Review-Error-Msg">{searchError ? searchError : null}</div>
 
-                <form className='Review-Form' onSubmit={handleReviewSubmit}>
-                    <label className="Review-Label">Name your review:</label> 
-                    <input
-                        className = {titleError ? "Game-Title-Input-Error": "Game-Title-Input"}
-                        placeholder= "My Review"
-                        value = {titleInput}
-                        onChange = {(e) => handleTitleChange(e.target.value)}
-                    />
-                    <div className="Review-Error-Msg">{titleError ? titleError : null}</div>
-
-                    <label className="Review-Label">Review:</label>
-                    <textarea 
-                        className={bodyError ? 'Body-Input-Error': 'Body-Input'}
-                        placeholder= {game ? `Thoughts on ${game?.name}? (280 chars max.)` : `My Review (280 chars max.)`}
-                        value={reviewBody}
-                        onChange={(e) => handleReviewChange(e.target.value)}
-                    />
-                    <div className="Review-Error-Msg">{bodyError ? bodyError : null}</div>
-
-                    <div className="Score-Button">
-                        <div className="Review-Score-Space">
-                            <label className="Score-Label">Score:</label>
-                            <div className= "Score-Select">{score}</div>
-                        </div>
-                        <div className="Arrows">
-                            <button className="Up" onClick={handleUpClick}>
-                                <MdOutlineArrowDropUp size='1.5em'/>
-                            </button>
-                            <div className="Divider"/>
-                            <button className="Down" onClick={handleDownClick}>
-                                <MdOutlineArrowDropDown size='1.5em'/>    
-                            </button>
-                        </div>
-
-                        <button type="submit" className="Post-Review-Button">{owned ? 'Update Review' : 'Post Review'}</button>
+                :
+                    <div className="No-Game">
+                        Search for a game to review.
                     </div>
-                </form>
+                }
+            </div>
+            <div className='Review-Form-Body'>
+                        <label className ="Review-Label Search-Label">Search for a game:</label> 
+                        <div className='Dropdown-Grid'>
+                            <div className = {searchFocus ? "Game-Search-Space-Focus" : searchSpaceStyle}>
+                                <FaMagnifyingGlass size='1.2em'id="search-icon"/>
+                                <input
+                                    className = "Game-Search-Input"
+                                    placeholder = "Search for games..."
+                                    value = {searchInput}
+                                    onChange = {(e) => {
+                                        handleSearchChange(e.target.value)
+                                        setSearchFocus(true)
+                                    }}
+                                    onFocus = {(e) => setSearchFocus(true)}
+                                    onBlur = {(e) => setSearchFocus(false)}
+                                />
+                            </div>
+
+                                <ul className = {searchInput && searchFocus ? "Dropdown" : "Dropdown Gone"}>
+                                    {searchResults?.map((game) => {
+                                        return (
+                                            <li 
+                                                guid={game.guid}
+                                                onMouseDown= {(e) => {
+                                                    e.preventDefault()
+                                                    setIdRef('')
+                                                    setSearchFocus(false)
+                                                    setCurrentGUID(e.target.attributes.guid.value)
+                                                    setSearchInput(e.target.outerText)
+                                            }}className = "Dropdown-Item">{game.name}</li>
+                                        )
+                                    })}
+                                </ul>
+
+                        </div>
+                    <div className="Review-Error-Msg">{searchError ? searchError : null}</div>
+
+                    <form className='Review-Form' onSubmit={handleReviewSubmit}>
+                        <label className="Review-Label">Name your review:</label> 
+                        <input
+                            className = {titleError ? "Game-Title-Input-Error": "Game-Title-Input"}
+                            placeholder= "My Review"
+                            value = {titleInput}
+                            onChange = {(e) => handleTitleChange(e.target.value)}
+                        />
+                        <div className="Review-Error-Msg">{titleError ? titleError : null}</div>
+
+                        <label className="Review-Label">Review:</label>
+                        <textarea 
+                            className={bodyError ? 'Body-Input-Error': 'Body-Input'}
+                            placeholder= {game ? `Thoughts on ${game?.name}? (280 chars max.)` : `My Review (280 chars max.)`}
+                            value={reviewBody}
+                            onChange={(e) => handleReviewChange(e.target.value)}
+                        />
+                        <div className="Review-Error-Msg">{bodyError ? bodyError : null}</div>
+
+                        <div className="Score-Button">
+                            <div className="Review-Score-Space">
+                                <label className="Score-Label">Score:</label>
+                                <div className= "Score-Select">{score}</div>
+                            </div>
+                            <div className="Arrows">
+                                <button className="Up" onClick={handleUpClick}>
+                                    <MdOutlineArrowDropUp size='1.5em'/>
+                                </button>
+                                <div className="Divider"/>
+                                <button className="Down" onClick={handleDownClick}>
+                                    <MdOutlineArrowDropDown size='1.5em'/>    
+                                </button>
+                            </div>
+
+                            <button type="submit" className="Post-Review-Button">{owned ? 'Update Review' : 'Post Review'}</button>
+                        </div>
+                    </form>
+            </div>
         </div>
-    </div>
     )
 }
 
