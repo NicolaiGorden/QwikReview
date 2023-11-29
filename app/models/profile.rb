@@ -12,8 +12,8 @@ class Profile < ApplicationRecord
           errors.add(:avatar, "is too large")
         end
 
-        acceptable_types = ["image/jpeg", "image/png"]
-        unless acceptable_types.include?(avatar.content_type)
+        image_types = ["image/jpeg", "image/png"]
+        unless image_types.include?(avatar.content_type)
             errors.add(:avatar, 'must be jpeg/png')
         end
     
