@@ -60,11 +60,13 @@ function Review({username, userImage, title, body, score, guid, onReviewDelete})
                         <>
                             { profileImage ?
                                 <div 
-                                className='Review-User-Img'
-                                style={{backgroundImage: `url(${profileImage})`}}
+                                    onClick={handleUsernameClick}
+                                    className='Review-User-Img'
+                                    style={{backgroundImage: `url(${profileImage})`}}
                                 ></div>
                             :
                                 <div 
+                                    onClick={handleUsernameClick}
                                     className='Review-User-Img'
                                     style={{backgroundImage: "url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png')"}}
                                 ></div>
