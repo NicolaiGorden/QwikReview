@@ -141,7 +141,7 @@ function UsersPage() {
                 }
             </div>
             <div className= 'User-Reveiew-Box'>
-                <div className= 'User-Reviews-Label'>Recent Reviews</div>
+                <div className= 'User-Reviews-Label'>Reviews</div>
                 <div className='User-Reviews'>
                     {reviews?.map(e => {
                         return (

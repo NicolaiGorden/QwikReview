@@ -254,17 +254,20 @@
     border: 2px solid rgb(188, 54, 54);
     border-radius: 10px;
     align-self: flex-start;
+    resize:none
 }
 
 
 .Body-Input-Error:Focus {
     border: 2px solid rgb(77, 135, 210);
     outline:none;
+    resize:none
 }
 
 .Body-Input:focus {
     border: 2px solid rgb(77, 135, 210);
     outline:none;
+    resize:none
 }
 
 .Review-Error-Msg {

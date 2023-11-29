@@ -108,7 +108,7 @@ function Gate() {
                                 setPasswordError('Required')
                                 break;
                             case 'Password must contain an uppercase character!':
-                                setPasswordError('Must contain uppercase')
+                                setPasswordError('No uppercase character!')
                                 break;   
                             case "Password confirmation doesn't match Password":
                                 setPasswordConfirmationError("Doesn't match password")
@@ -157,6 +157,7 @@ function Gate() {
                         onChange={(e) => setPasswordConfirmation(e.target.value)}
                     />
                     <div className="Error-Msg">{passwordConfirmationError ? passwordConfirmationError : null}</div>
+                    <div className="Rule-msg">{'-Password must contain an uppercase character'}</div>
                 </>
                 :
                 null

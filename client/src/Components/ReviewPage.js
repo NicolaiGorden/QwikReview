@@ -215,8 +215,20 @@ function ReviewPage() {
                                                         setSearchError("Please find a game!")
                                                         setSearchSpaceStyle("Game-Search-Space-Error")
                                                         break;
+                                                    case 'Title is too short (minimum is 5 characters)':
+                                                        setTitleError('Too short! (minimum 5 characters)')
+                                                        break;
+                                                    case 'Body is too short (minimum is 20 characters)':
+                                                            setBodyError('Too short! (minimum 20 characters)')
+                                                        break;
                                                 }
                                             })
+                                            if (err.errors.includes("Title can't be blank")) {
+                                                setTitleError('Required')
+                                            }
+                                            if (err.errors.includes("Body can't be blank")) {
+                                                setBodyError('Required')
+                                            }
                                         } else if (err.error === 'Not Authorized') {
                                             setBodyError('You must be logged in to post a review.')
                                         }
@@ -270,6 +282,7 @@ function ReviewPage() {
                         })
                     } else {
                         res.json().then((err) => {
+                            console.log(err)
                             if (err.errors) {
                                 err.errors.map(e => {
                                     switch (e) {
@@ -292,8 +305,20 @@ function ReviewPage() {
                                             setSearchError("Please find a game!")
                                             setSearchSpaceStyle("Game-Search-Space-Error")
                                             break;
+                                        case 'Title is too short (minimum is 5 characters)':
+                                            setTitleError('Too short! (minimum 5 characters)')
+                                            break;
+                                        case 'Body is too short (minimum is 20 characters)':
+                                             setBodyError('Too short! (minimum 20 characters)')
+                                            break;
                                     }
                                 })
+                                if (err.errors.includes("Title can't be blank")) {
+                                    setTitleError('Required')
+                                }
+                                if (err.errors.includes("Body can't be blank")) {
+                                    setBodyError('Required')
+                                }
                             } else if (err.error === 'Not Authorized') {
                                 setBodyError('You must be logged in to post a review.')
                             }
@@ -361,8 +386,20 @@ function ReviewPage() {
                                 case 'Not Authorized':
                                     setBodyError("Not logged in!")
                                     break;
+                                case 'Title is too short (minimum is 5 characters)':
+                                    setTitleError('Too short! (minimum 5 characters)')
+                                    break;
+                                case 'Body is too short (minimum is 20 characters)':
+                                        setBodyError('Too short! (minimum 20 characters)')
+                                    break;
                             }
                         })
+                        if (err.errors.includes("Title can't be blank")) {
+                            setTitleError('Required')
+                        }
+                        if (err.errors.includes("Body can't be blank")) {
+                            setBodyError('Required')
+                        }
                     })
                 }
             })
@@ -386,7 +423,7 @@ function ReviewPage() {
                 }
             </div>
             <div className='Review-Form-Body'>
-                        <label className ="Review-Label Search-Label">Search for a game:</label> 
+                        <label className ="Review-Label Search-Label">{!game ? 'Search for a game:' : 'Find a different game:'}</label> 
                         <div className='Dropdown-Grid'>
                             <div className = {searchFocus ? "Game-Search-Space-Focus" : searchSpaceStyle}>
                                 <FaMagnifyingGlass size='1.2em'id="search-icon"/>

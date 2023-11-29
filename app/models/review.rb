@@ -1,8 +1,10 @@
 class Review < ApplicationRecord
     validates :title, presence: true
+    validates :title, length: { minimum: 5 }
 
     validates :body, presence: true
     validates :body, length: { maximum: 280 }
+    validates :body, length: { minimum: 20 }
 
     validates :score, numericality: { less_than_or_equal_to: 10, greater_than_or_equal_to: 1 }
 
