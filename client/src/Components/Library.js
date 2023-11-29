@@ -41,7 +41,7 @@ function Library() {
             <div className="Sidebar">
                 <input
                     className="Search-Input"
-                    placeholder="Search by Title..."
+                    placeholder="Search database by title..."
                     type="Text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}

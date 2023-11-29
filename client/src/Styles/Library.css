@@ -43,4 +43,22 @@
     height: 700px;
     border-radius: 0px 5px 5px 0px;
     background-color: rgb(60, 60, 60);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.Search-Input {
+    background-color: transparent;
+    color: rgb(245, 245, 245);
+    font-family: 'PT Sans', sans-serif;
+    font-size: 14px;
+    width: 80%;
+    height: 50px;
+    padding: 18px 20px;
+    margin: 10px 0px;
+    box-sizing: border-box;
+    border: 2px solid rgb(193, 193, 193);
+    border-radius: 10px;
 }
