@@ -170,7 +170,6 @@ function ReviewPage() {
                                     setUser(me)
                                     
                                     navigate(`/game/${newG.id}`)
-                                    console.log(newG)
                                     })
                                 } else {
                                     res.json().then((err) => {
@@ -180,14 +179,12 @@ function ReviewPage() {
                                         .then( res => {
                                             if (res.ok) {
                                                 const gameIndex = allGames.findIndex((game) => game.id === newG.id)
-                                                console.log('game:', allGames[gameIndex])
                                                 if (gameIndex > -1) {
                                                     allGames.splice(gameIndex, 1)
                                                 }
                                                 setGames(allGames)
                                             }
                                         })
-                                        console.log(newG.id)
                                         if (err.errors) {
                                             err.errors.map(e => {
                                                 switch (e) {
@@ -307,7 +304,6 @@ function ReviewPage() {
             })
             .then (res => {
                 if (res.ok) {
-                    console.log('good')
                     res.json().then((review) => {
                         let allGames = [...games]
                         const gameIndex = allGames.findIndex((g) => g.id === game.id)
@@ -331,7 +327,6 @@ function ReviewPage() {
                     })
                 } else {
                     res.json().then((err) => {
-                        console.log(err)
                         err.errors?.map(e => {
                             
                             switch (e) {
