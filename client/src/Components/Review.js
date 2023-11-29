@@ -20,7 +20,9 @@ function Review({username, userImage, title, body, score, guid, onReviewDelete})
     }, [guid])
 
     useEffect(() => {
-        setProfileImage(users.find((user) => user.username == username).profile.avatar)
+        if (users) {
+            setProfileImage(users?.find((user) => user.username == username)?.profile?.avatar)
+        }
     })
     
     function deleteToggle() {
@@ -28,7 +30,7 @@ function Review({username, userImage, title, body, score, guid, onReviewDelete})
     }
 
     function handleUsernameClick() {
-        navigate(`/users/${users.find((user) => user.username == username).id}`)
+        navigate(`/users/${users?.find((user) => user.username == username).id}`)
     }
 
     function handleGameClick() {

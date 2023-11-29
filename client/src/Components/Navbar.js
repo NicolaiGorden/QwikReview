@@ -8,6 +8,10 @@ function Navbar() {
     const navigate = useNavigate();
     const [user, setUser] = useContext(LoginContext)
 
+
+    useEffect(() => {
+        console.log(user)
+    }, [])
     function toLogin(e) {
         e.preventDefault()
         navigate('/gate')
@@ -35,6 +39,12 @@ function Navbar() {
         }).then(setUser(''))
         navigate('/gate')
     }
+
+    function toUser(e) {
+        e.preventDefault();
+        navigate(`/users/${user.id}`)
+    }
+
     return (
         <header>
             <nav>
@@ -43,7 +53,15 @@ function Navbar() {
                     { user ?
                         <>
                             <li className="Navli signup"><button onClick={toNewReview} className="navbutton">+ NEW REVIEW</button></li>
-                            <li className="Navli login"><button onClick={onLogout} className="navbutton">LOG OUT</button></li>   
+                            <li className="Navli login"><button onClick={onLogout} className="navbutton">LOG OUT</button></li>
+                            <div className="Navbar-Image-Space">
+                                <div 
+                                        onClick={toUser}
+                                        className='Navbar-User-Img'
+                                        style={{backgroundImage: `url(${user?.profile?.avatar})`}}
+                                        
+                                ></div>
+                            </div>
                         </>                 
                     :
                         <>
