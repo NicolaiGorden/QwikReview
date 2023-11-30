@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { LoginContext } from '../App';
+import { LoginContext, UsersContext } from '../App';
 import styles from '../Styles/Gate.css'
 
 function Gate() {
     const [signUp, setSignup] = useState(false)
     const [user, setUser] = useContext(LoginContext)
+    const [users, setUsers] = useContext(UsersContext)
     const navigate = useNavigate();
     const [usernameError, setUsernameError] = useState('')
     const [passwordError, setPasswordError] = useState('')
@@ -56,6 +57,9 @@ function Gate() {
             if(res.ok){
                 res.json().then((user) => {
                     setUser(user)
+                    let allUsers = users
+                    allUsers.push(user)
+                    setUsers(allUsers)
                     navigate('/')
                     setUsernameError('')
                     setPasswordError('')

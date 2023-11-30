@@ -5,8 +5,18 @@ User.create(username: "MasterChief", password: "Cortana")
 User.create(username: "Toriel", password: "SnailpieGOATed")
 User.create(username: "Monokuma", password: "Punishmenttime")
 
+#PROFILES
+profile_1 = Profile.update(1, :bio => "My brother told me to make an account here. Hope people like my reviews!")
+profile_2 = Profile.update(2, :bio => "The courtroom doesn't leave me much time for gaming, but I still play something here and there!")
+profile_3 = Profile.update(3, :bio => "I won't play anything too easy.")
+profile_4 = Profile.update(4, :bio => "I want to find good games without any fighting in them.")
+profile_5 = Profile.update(5, :bio => "Nothing's better than Danganronpa! Play Danganronpa every day! In fact, that's all you should play! Upupupu...")
 
-# Profile.find_by(user_id: 1).bio = "Hello World"
+profile_1.avatar.attach( io: File.open(Rails.root.join('db/images/Lugi.png')), filename: 'Lugi.png')
+profile_2.avatar.attach( io: File.open(Rails.root.join('db/images/Wright.png')), filename: 'Wright.png')
+profile_3.avatar.attach( io: File.open(Rails.root.join('db/images/MC.png')), filename: 'MC.png')
+profile_4.avatar.attach( io: File.open(Rails.root.join('db/images/Tor.png')), filename: 'Tor.png')
+profile_5.avatar.attach( io: File.open(Rails.root.join('db/images/Mon.png')), filename: 'Mon.png')
 
 #GAMES
 Game.create(guid:"3030-48579", name:"Rhythm Heaven Megamix", art:"https://www.giantbomb.com/a/uploads/original/8/82063/2896839-6215576118-SQ_3D.jpg")
