@@ -61,7 +61,6 @@ function UsersPage() {
         .then(res => {
             if (res.ok) {
                 res.json().then((profile) => {
-                    console.log(profile)
                     let allUsers = users
                     let userIndex = allUsers.findIndex((user) => user.id === thisUser.id)
                     allUsers[userIndex].profile.bio = profile.bio
@@ -78,7 +77,6 @@ function UsersPage() {
                 })
             } else {
                 res.json().then((err) => {
-                    console.log(err.errors)
                     err.errors?.map(e => {
                         switch (e) {
                             case 'Bio is too long (maximum is 300 characters)':

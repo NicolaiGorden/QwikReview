@@ -271,7 +271,7 @@ function ReviewPage() {
 
                             let allUsers = users
                             let userIndex = allUsers.findIndex((u) => u.id === user.id)
-                            allUsers[userIndex].reviews.push(review)
+                            allUsers[userIndex]?.reviews?.push(review)
                             setUsers(allUsers)
 
                             let me = user
@@ -444,6 +444,7 @@ function ReviewPage() {
                                     {searchResults?.map((game) => {
                                         return (
                                             <li 
+                                                key={game.guid}
                                                 guid={game.guid}
                                                 onMouseDown= {(e) => {
                                                     e.preventDefault()

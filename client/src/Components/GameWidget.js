@@ -13,7 +13,7 @@ function GameWidget({id, guid, art, name}) {
     }
 
     return (
-        <div onClick={clickGame}class="game-widget">
+        <div onClick={clickGame}className="game-widget">
             <div className="title-card">    
                 <div className="title-text">{name}</div>
             </div>

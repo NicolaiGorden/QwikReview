@@ -65,7 +65,7 @@ function App() {
                     element= {<ReviewPage/>}
                   />
                   <Route 
-                    path="/review/:id"
+                    path="/review/game/:id"
                     element= {<ReviewPage/>}
                   />
                   <Route 

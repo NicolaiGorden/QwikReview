@@ -35,7 +35,7 @@ function GamePage() {
 
     function handleNewReview(e) {
         e.preventDefault()
-        navigate(`/review/${id}`)
+        navigate(`/review/game/${id}`)
     }
 
     function onReviewDelete(e) {

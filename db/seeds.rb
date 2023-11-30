@@ -5,6 +5,9 @@ User.create(username: "MasterChief", password: "Cortana")
 User.create(username: "Toriel", password: "SnailpieGOATed")
 User.create(username: "Monokuma", password: "Punishmenttime")
 
+
+# Profile.find_by(user_id: 1).bio = "Hello World"
+
 #GAMES
 Game.create(guid:"3030-48579", name:"Rhythm Heaven Megamix", art:"https://www.giantbomb.com/a/uploads/original/8/82063/2896839-6215576118-SQ_3D.jpg")
 Game.create(guid:"3030-43883", name:"Puyo Puyo Tetris", art:"https://www.giantbomb.com/a/uploads/original/8/85465/2912120-81fez0skvll._ac_sl1500_.jpg")
