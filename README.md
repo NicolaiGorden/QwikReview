@@ -3,9 +3,9 @@
 This application makes use of the GiantBomb API. [https://www.giantbomb.com/api/]
 
 # RUNNING LOCALLY
-note: running this application locally prevents you from uploading profile images. If you'd like to see the full functionality, visit [render link goes here]
-1. Open the project folder in two terminals.
-2. In one, run 'rails s'.
+note: running this application locally prevents you from uploading profile images, as the AWS master key is not included.
+1. Navigate to the project folder in two terminals.
+2. In one, run db:seed. Once that's completed, run 'rails s'.
 3. In the other, run 'npm start --prefix client'
 4. Visit http://localhost:4000/ in your web browser.
 
